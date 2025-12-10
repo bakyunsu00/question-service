@@ -6,7 +6,7 @@ import com.mycom.myapp.domain.User;
 public interface ExamService {
 
 
-
+    public Exam getExamById(Long id);
     public Exam createExam(User user, int questionCount);
 
 

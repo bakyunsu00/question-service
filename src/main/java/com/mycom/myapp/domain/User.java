@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "users") // DB 예약어 피하기 위해 s 붙임
+@Table(name = "user") // DB 예약어 피하기 위해 s 붙임
 public class User {
 
     @Id
