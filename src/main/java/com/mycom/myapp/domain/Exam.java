@@ -13,12 +13,16 @@ import jakarta.persistence.PrePersist;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@ToString
 public class Exam {
 
     @Id
@@ -33,9 +37,15 @@ public class Exam {
 
     private LocalDateTime createdAt; // 응시 일시
 
+
+    public Exam(User user) {
+        this.user = user;
+    }
+
     // 시험지 1장에는 여러 문제의 기록이 담김
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
     private List<ExamRecord> examRecords = new ArrayList<>();
+
 
     // 시험지 생성 시 날짜 자동 저장
     @PrePersist
@@ -46,4 +56,12 @@ public class Exam {
     public void setTotalScore(int score) {
         this.totalScore = score;
     }
+
+    public void addExamRecords(ExamRecord examRecord){
+        this.examRecords.add(examRecord);
+        examRecord.setExam(this);
+    }
+
+
+
 }
