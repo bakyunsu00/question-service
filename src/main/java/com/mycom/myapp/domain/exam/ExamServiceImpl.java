@@ -17,30 +17,34 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 
-public class ExamServiceImpl implements ExamService{
+public class ExamServiceImpl implements ExamService {
 
 
     private final ExamRepository examRepository;
     private final UserService userService;
+
+    // 추후 병합된 question 레포지토리로 교체 필요
     private final TestQuestionRepository questionRepository;
 
     @Override
     public Exam getExamById(Long id) {
         Optional<Exam> optionalExam = examRepository.findById(id);
-        return optionalExam.orElseThrow(() ->new ExamNotFoundException(id+"번 시험지를 찾을 수 없습니다."));
+        return optionalExam.orElseThrow(() -> new ExamNotFoundException(id + "번 시험지를 찾을 수 없습니다."));
     }
 
     @Override
     public Exam createExam(User user, int questionCount) {
         Exam exam = new Exam(user);
-        //question 레포지토리로 교체 필요
+        addRecordsToExam(questionCount, exam);
+        return examRepository.save(exam);
+    }
+
+
+    private void addRecordsToExam(int questionCount, Exam exam) {
         List<Question> questions = questionRepository.pickRandomQuestion(questionCount);
-        for(Question question : questions){
+        for (Question question : questions) {
             ExamRecord examRecord = new ExamRecord(question);
             exam.addExamRecords(examRecord);
         }
-        exam = examRepository.save(exam);
-
-        return exam;
     }
 }
