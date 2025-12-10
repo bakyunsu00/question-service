@@ -22,3 +22,8 @@
 -- 카테고리 생성:    POST /api/admin/categories
 -- 카테고리 수정:    PUT /api/admin/categories/{id}
 -- 카테고리 삭제:    DELETE /api/admin/categories/{id}
+
+12/11 예정
+로그인/회원가입 기능 디테일 추가
+security에 다른 api 설정 추가
+jwt 적용
