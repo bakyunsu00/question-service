@@ -4,6 +4,7 @@ import com.mycom.myapp.domain.Exam;
 import com.mycom.myapp.domain.ExamRecord;
 import com.mycom.myapp.domain.Question;
 import com.mycom.myapp.domain.User;
+import com.mycom.myapp.domain.enums.Difficulty;
 import com.mycom.myapp.domain.user.UserService;
 import com.mycom.myapp.exceptions.ExamNotFoundException;
 import java.time.LocalDateTime;
@@ -33,15 +34,15 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public Exam createExam(User user, int questionCount) {
+    public Exam createExam(User user, int questionCount, Difficulty difficulty) {
         Exam exam = new Exam(user);
-        addRecordsToExam(questionCount, exam);
+        addRecordsToExam(questionCount, exam, difficulty);
         return examRepository.save(exam);
     }
 
 
-    private void addRecordsToExam(int questionCount, Exam exam) {
-        List<Question> questions = questionRepository.pickRandomQuestion(questionCount);
+    private void addRecordsToExam(int questionCount, Exam exam, Difficulty difficulty) {
+        List<Question> questions = questionRepository.pickRandomQuestion(questionCount, difficulty);
         for (Question question : questions) {
             ExamRecord examRecord = new ExamRecord(question);
             exam.addExamRecords(examRecord);

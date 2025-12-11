@@ -4,6 +4,7 @@ package com.mycom.myapp.domain.exam;
 import com.mycom.myapp.domain.Exam;
 import com.mycom.myapp.domain.User;
 
+import com.mycom.myapp.domain.enums.Difficulty;
 import com.mycom.myapp.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -37,10 +38,11 @@ public class ExamController {
     public String makeExam(
             @AuthenticationPrincipal User user,
             @RequestParam int questionCount,
+            @RequestParam Difficulty difficulty,
             RedirectAttributes redirectAttributes){
         User mockUser = mockUserService.findUserById(1L);
 
-        Exam exam = examService.createExam(mockUser, questionCount);
+        Exam exam = examService.createExam(mockUser, questionCount, difficulty);
         redirectAttributes.addAttribute("examId",exam.getId());
         return "redirect:/api/user/exams/{examId}";
     }
