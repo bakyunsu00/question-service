@@ -1,14 +1,15 @@
-package com.mycom.myapp.domain.exam;
+package com.mycom.myapp.domain.exam.service;
 
 import com.mycom.myapp.domain.Exam;
 import com.mycom.myapp.domain.ExamRecord;
 import com.mycom.myapp.domain.Question;
 import com.mycom.myapp.domain.User;
 import com.mycom.myapp.domain.enums.Difficulty;
+import com.mycom.myapp.domain.exam.ExamRepository;
+import com.mycom.myapp.domain.exam.ExamService;
+import com.mycom.myapp.domain.exam.TestQuestionRepository;
 import com.mycom.myapp.domain.user.UserService;
 import com.mycom.myapp.exceptions.ExamNotFoundException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

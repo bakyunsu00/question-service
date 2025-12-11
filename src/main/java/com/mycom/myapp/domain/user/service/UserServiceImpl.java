@@ -1,6 +1,8 @@
-package com.mycom.myapp.domain.user;
+package com.mycom.myapp.domain.user.service;
 
 import com.mycom.myapp.domain.User;
+import com.mycom.myapp.domain.user.UserRepository;
+import com.mycom.myapp.domain.user.UserService;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

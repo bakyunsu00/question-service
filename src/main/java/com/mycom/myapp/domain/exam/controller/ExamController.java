@@ -1,16 +1,19 @@
-package com.mycom.myapp.domain.exam;
+package com.mycom.myapp.domain.exam.controller;
 
 
 import com.mycom.myapp.domain.Exam;
 import com.mycom.myapp.domain.User;
 
 import com.mycom.myapp.domain.enums.Difficulty;
+import com.mycom.myapp.domain.exam.ExamService;
+import com.mycom.myapp.domain.exam.dto.ExamMakeRequestDto;
 import com.mycom.myapp.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,12 +40,10 @@ public class ExamController {
     @PostMapping("/exams")
     public String makeExam(
             @AuthenticationPrincipal User user,
-            @RequestParam int questionCount,
-            @RequestParam Difficulty difficulty,
+            ExamMakeRequestDto examMakeRequestDto,
             RedirectAttributes redirectAttributes){
         User mockUser = mockUserService.findUserById(1L);
-
-        Exam exam = examService.createExam(mockUser, questionCount, difficulty);
+        Exam exam = examService.createExam(mockUser, examMakeRequestDto.getQuestionCount(), examMakeRequestDto.getDifficulty());
         redirectAttributes.addAttribute("examId",exam.getId());
         return "redirect:/api/user/exams/{examId}";
     }
