@@ -1,5 +1,9 @@
 package com.mycom.myapp.domain;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,15 +14,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Exam {
 
     @Id
@@ -34,6 +39,7 @@ public class Exam {
     private LocalDateTime createdAt; // 응시 일시
 
     // 시험지 1장에는 여러 문제의 기록이 담김
+    @Builder.Default
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
     private List<ExamRecord> examRecords = new ArrayList<>();
 
