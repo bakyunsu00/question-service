@@ -1,0 +1,72 @@
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+# ----------------------------------------------------------------------
+# 1. 빌드 결과 및 출력 디렉토리
+# ----------------------------------------------------------------------
+/target/
+/build/
+
+# 클래스 및 JAR 파일
+*.class
+*.jar
+*.war
+*.zip
+
+# ----------------------------------------------------------------------
+# 2. 민감한 정보 및 로컬 설정 파일
+# ----------------------------------------------------------------------
+# DB 비밀번호, API 키 등이 포함된 파일 제외
+/src/main/resources/application.properties
+/src/main/resources/application.yml
+/src/main/resources/application-local.properties
+/src/main/resources/application-dev.properties
+
+# ----------------------------------------------------------------------
+# 3. IDE 및 OS 특정 파일
+# ----------------------------------------------------------------------
+# IntelliJ IDEA
+.idea/
+
+.settings/
+
+# Log 파일
+*.log
+logs/
+
+# macOS
+.DS_Store
