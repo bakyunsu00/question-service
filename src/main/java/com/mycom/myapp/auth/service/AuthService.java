@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.mycom.myapp.auth.dto.LoginRequestDto;
 import com.mycom.myapp.auth.dto.RegisterDto;
-import com.mycom.myapp.auth.jwt.JwtUtil;
 import com.mycom.myapp.auth.repository.UserRepository;
 import com.mycom.myapp.domain.User;
 import com.mycom.myapp.domain.enums.UserRole;
@@ -18,20 +17,6 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
-    
-    public String login(LoginRequestDto dto) {
-        User user = userRepository.findByUsername(dto.getUsername())
-                .orElseThrow(() -> new RuntimeException("아이디 없음"));
-
-        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-            throw new RuntimeException("비밀번호 틀림");
-        }
-        
-        String token = jwtUtil.createToken(user.getUsername(), user.getRole().name());
-
-        return token;
-    }
 
     public void register(RegisterDto dto) {
 
@@ -43,5 +28,17 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
+    }
+    
+    public User login(LoginRequestDto dto) {
+        User user = userRepository.findByUsername(dto.getUsername())
+                .orElseThrow(() -> new RuntimeException("아이디 없음"));
+
+        // ✅ 여기서 네가 겪은 오류 발생함
+        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
+            throw new RuntimeException("비밀번호 틀림");
+        }
+
+        return user;
     }
 }

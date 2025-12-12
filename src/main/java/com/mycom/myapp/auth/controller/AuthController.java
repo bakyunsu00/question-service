@@ -1,7 +1,5 @@
 package com.mycom.myapp.auth.controller;
 
-import java.util.Map;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,10 +23,17 @@ public class AuthController {
 	
 	@PostMapping("/auth/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequestDto dto) {
-		String token = authService.login(dto);
-		return ResponseEntity.ok(Map.of("token",token));		
+		User user = authService.login(dto);
+
+        return ResponseEntity.ok(
+                LoginResponseDto.builder()
+                        .id(user.getId())
+                        .username(user.getUsername())
+                        .nickname(user.getNickname())
+                        .role(user.getRole())
+                        .build()
+        );
 	}
-	
 	@PostMapping("/auth/register")
 	public ResponseEntity<?> registerForm(@RequestBody RegisterDto dto) {
 		authService.register(dto);
