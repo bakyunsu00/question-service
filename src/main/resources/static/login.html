@@ -27,6 +27,9 @@
 </button>
 
 <script>
+
+
+
 function login() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
@@ -49,9 +52,11 @@ function login() {
     })
     .then(data => {
         console.log("로그인 성공:", data);
+        
+        localStorage.setItem("token", data.token);
+        
         alert("로그인 성공");
 
-        // ✅ 로그인 성공 후 이동
         location.href = "/";
     })
     .catch(err => {
