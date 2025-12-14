@@ -9,13 +9,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "users") // DB 예약어 피하기 위해 s 붙임
+@AllArgsConstructor
+@Builder
+@Table(name = "user") // DB 예약어 피하기 위해 s 붙임
 public class User {
 
     @Id
