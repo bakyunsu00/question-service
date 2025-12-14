@@ -9,6 +9,7 @@ import com.mycom.myapp.domain.exam.ExamService;
 import com.mycom.myapp.domain.exam.dto.ExamMakeRequestDto;
 import com.mycom.myapp.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
+@Slf4j
+
 public class ExamController {
 
 
@@ -33,7 +36,8 @@ public class ExamController {
 
 
     @GetMapping("/exams")
-    public String Form(){
+    public String Form(Model model){
+
         return "exam-form";
     }
 
@@ -42,6 +46,7 @@ public class ExamController {
             @AuthenticationPrincipal User user,
             ExamMakeRequestDto examMakeRequestDto,
             RedirectAttributes redirectAttributes){
+        log.debug("바인딩된 DTO= {}", examMakeRequestDto);
         User mockUser = mockUserService.findUserById(1L);
         Exam exam = examService.createExam(mockUser, examMakeRequestDto.getQuestionCount(), examMakeRequestDto.getDifficulty());
         redirectAttributes.addAttribute("examId",exam.getId());
@@ -52,6 +57,9 @@ public class ExamController {
     public String startExam(@PathVariable("examId") Long id, Model model){
         Exam exam = examService.getExamById(id);
         model.addAttribute("exam",exam);
+
+        log.debug("생성된 Exam = {} ", exam);
+
         return "started-exam";
     }
 
