@@ -15,23 +15,34 @@ import com.mycom.myapp.auth.service.AuthService;
 import com.mycom.myapp.domain.User;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
+@Slf4j
 public class AuthController {
 	
 	private final AuthService authService;
 	
 	@PostMapping("/auth/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequestDto dto) {
+		log.info("[login] 로그인 시도 : username = {} ", dto.getUsername());
 		String token = authService.login(dto);
+		log.info("[login] 로그인 성공 : username = {} ", dto.getUsername());
 		return ResponseEntity.ok(Map.of("token",token));		
 	}
 	
 	@PostMapping("/auth/register")
 	public ResponseEntity<?> registerForm(@RequestBody RegisterDto dto) {
+		log.info("[register] 회원가입 시도 : username = {} ", dto.getUsername());
 		authService.register(dto);
+		log.info("[register] 회원가입 성공 : username = {} ", dto.getUsername());
         return ResponseEntity.ok("회원가입 성공");
+	}
+	
+	@PostMapping("/auth/logout")
+	public ResponseEntity<?> logout(){
+		return ResponseEntity.ok("로그아웃 완료");
 	}
 }

@@ -1,10 +1,11 @@
 package com.mycom.myapp.domain.exam;
 
+import com.mycom.myapp.auth.service.UserService;
 import com.mycom.myapp.domain.Exam;
 import com.mycom.myapp.domain.ExamRecord;
 import com.mycom.myapp.domain.Question;
 import com.mycom.myapp.domain.User;
-import com.mycom.myapp.domain.user.UserService;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
