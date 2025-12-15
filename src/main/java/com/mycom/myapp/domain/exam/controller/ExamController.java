@@ -1,10 +1,9 @@
 package com.mycom.myapp.domain.exam.controller;
 
 
-import com.mycom.myapp.domain.Exam;
+import com.mycom.myapp.domain.exam.Exam;
 import com.mycom.myapp.domain.User;
 
-import com.mycom.myapp.domain.enums.Difficulty;
 import com.mycom.myapp.domain.exam.ExamService;
 import com.mycom.myapp.domain.exam.dto.ExamMakeRequestDto;
 import com.mycom.myapp.domain.user.UserRepository;
@@ -15,11 +14,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 

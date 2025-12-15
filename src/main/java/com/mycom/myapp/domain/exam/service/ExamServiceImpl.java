@@ -1,7 +1,7 @@
 package com.mycom.myapp.domain.exam.service;
 
-import com.mycom.myapp.domain.Exam;
-import com.mycom.myapp.domain.ExamRecord;
+import com.mycom.myapp.domain.exam.Exam;
+import com.mycom.myapp.domain.exam.ExamRecord;
 import com.mycom.myapp.domain.Question;
 import com.mycom.myapp.domain.User;
 import com.mycom.myapp.domain.enums.Difficulty;

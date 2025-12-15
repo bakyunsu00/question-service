@@ -1,6 +1,5 @@
 package com.mycom.myapp.domain.exam;
 
-import com.mycom.myapp.domain.Exam;
 import com.mycom.myapp.domain.User;
 import com.mycom.myapp.domain.enums.Difficulty;
 
