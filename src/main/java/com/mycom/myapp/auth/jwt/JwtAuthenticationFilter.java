@@ -30,16 +30,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		Claims claims = null;
 		if(token != null) {
 			claims = jwtUtil.validateToken(token);
-		}
-		
-		if(claims != null) {
-			String username = claims.getSubject();
 			
-			UsernamePasswordAuthenticationToken authentication =
-					jwtUtil.getAuthentication(token);
-			authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-			SecurityContextHolder.getContext().setAuthentication(authentication);
-		}
+			if(claims != null) {
+				String username = claims.getSubject();
+				
+				UsernamePasswordAuthenticationToken authentication =
+						jwtUtil.getAuthentication(token);
+				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+				log.debug("[JwtFilter] 인증 완료 url = {}",request.getRequestURI());
+			}
+			else {
+				log.debug("[JwtFilter] 토큰 유효x url = {}",request.getRequestURI());
+			}
+		}		
 		
 		filterChain.doFilter(request, response);
 	}

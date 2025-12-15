@@ -1,35 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>로그인</title>
+    <title>JWT 로그인 테스트</title>
 </head>
 <body>
 
-<h2>로그인</h2>
+<h1>JWT 로그인 테스트 페이지</h1>
 
-<div>
-    <label>아이디</label>
-    <input type="text" id="username" required>
+<!-- ================= 로그인 영역 ================= -->
+<div id="login-area">
+
+    <h2>로그인</h2>
+
+    <div>
+        <label>아이디</label>
+        <input type="text" id="username" required>
+    </div>
+
+    <div>
+        <label>비밀번호</label>
+        <input type="password" id="password" required>
+    </div>
+
+    <button onclick="login()">로그인</button>
+
+    <p id="error" style="color:red;"></p>
+
+    <button onclick="location.href='/register.html'" style="margin-top:10px;">
+        회원가입
+    </button>
+
 </div>
 
-<div>
-    <label>비밀번호</label>
-    <input type="password" id="password" required>
+<!-- ================= 로그아웃 영역 ================= -->
+<div id="logout-area" style="display:none;">
+
+    <h2>로그인 완료</h2>
+    <p id="login-user"></p>
+
+    <button onclick="logout()">로그아웃</button>
+
 </div>
-
-<button onclick="login()">로그인</button>
-
-<p id="error" style="color:red;"></p>
-
-<button onclick="location.href='/register.html'" style="margin-top:10px;">
-    회원가입
-</button>
 
 <script>
+// ================= 페이지 로드시 로그인 상태 확인 =================
+document.addEventListener("DOMContentLoaded", checkLoginStatus);
 
+function checkLoginStatus() {
+    const token = localStorage.getItem("token");
 
+    if (!token) {
+        showLoginForm();
+        return;
+    }
 
+    fetch("/api/user/me", {
+        method: "GET",
+        headers: {
+            "X-AUTH-TOKEN": token
+        }
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error("토큰 무효");
+        }
+        return res.json();
+    })
+    .then(user => {
+        showLogoutForm(user.username);
+    })
+    .catch(() => {
+        localStorage.removeItem("token");
+        showLoginForm();
+    });
+}
+
+// ================= 화면 전환 =================
+function showLoginForm() {
+    document.getElementById("login-area").style.display = "block";
+    document.getElementById("logout-area").style.display = "none";
+}
+
+function showLogoutForm(username) {
+    document.getElementById("login-area").style.display = "none";
+    document.getElementById("logout-area").style.display = "block";
+    document.getElementById("login-user").innerText =
+        "로그인 사용자: " + username;
+}
+
+// ================= 로그인 =================
 function login() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
@@ -51,18 +111,21 @@ function login() {
         return res.json();
     })
     .then(data => {
-        console.log("로그인 성공:", data);
-        
         localStorage.setItem("token", data.token);
-        
         alert("로그인 성공");
-
         location.href = "/";
     })
-    .catch(err => {
+    .catch(() => {
         document.getElementById("error").innerText =
             "아이디 또는 비밀번호가 잘못되었습니다.";
     });
+}
+
+// ================= 로그아웃 =================
+function logout() {
+    localStorage.removeItem("token");
+    alert("로그아웃 되었습니다");
+    location.href = "/login";
 }
 </script>
 

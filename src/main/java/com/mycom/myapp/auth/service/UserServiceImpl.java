@@ -1,8 +1,11 @@
-package com.mycom.myapp.domain.user;
+package com.mycom.myapp.auth.service;
 
-import com.mycom.myapp.domain.User;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import com.mycom.myapp.auth.repository.UserRepository;
+import com.mycom.myapp.domain.User;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

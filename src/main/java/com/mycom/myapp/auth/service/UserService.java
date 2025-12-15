@@ -1,4 +1,4 @@
-package com.mycom.myapp.domain.user;
+package com.mycom.myapp.auth.service;
 
 import com.mycom.myapp.domain.User;
 
