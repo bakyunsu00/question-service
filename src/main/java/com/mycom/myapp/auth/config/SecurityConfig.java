@@ -36,22 +36,27 @@ public class SecurityConfig {
 						auth -> auth
 							.requestMatchers(
 									"/",
-									"index.html",
+									"/index.html",
 					                "/login",
 					                "/login.html",
 					                "/register",
 					                "/register.html",
 									"/api/auth/**",
-                                    "/api/user/**"
+									"/api/user/**",
+									"/js/**",
+									"/.well-known/**",
+									"/favicon.ico",
+								    "/error"
 							).permitAll()
 							.requestMatchers("/admin","/admin.html","/api/admin/**").hasRole(UserRole.ROLE_ADMIN.name().replace("ROLE_", "")) //or enum 파일에서 ROLE_ 제거
+							.anyRequest().authenticated()
 						)
 				.csrf(csrf -> csrf.disable())
 				.httpBasic(httpBasic -> httpBasic.disable())
 				.formLogin(form -> form.disable())
 				.logout(logout -> logout.disable())
-                .addFilterBefore(jwtfFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+				.addFilterBefore(jwtfFilter, UsernamePasswordAuthenticationFilter.class)
+				.build();
 	}
 
 }
