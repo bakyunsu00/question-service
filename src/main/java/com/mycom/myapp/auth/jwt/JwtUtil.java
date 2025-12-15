@@ -23,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils; // ★ 이 줄이 없으면 에러납니다!
 @Component
 @RequiredArgsConstructor
-@Getter
 @Slf4j
 public class JwtUtil {
 	
@@ -40,6 +39,7 @@ public class JwtUtil {
 				secretKeyStr.getBytes(StandardCharsets.UTF_8), 
 				Jwts.SIG.HS256.key().build().getAlgorithm()
 		);
+		log.info("[JwtUtil] SecretKey 생성");
 	}
 	
 	public String createToken(String username, String role) {
@@ -54,12 +54,15 @@ public class JwtUtil {
 				.signWith(secretKey, Jwts.SIG.HS256)
 				.compact();
 		
+		log.debug("[JwtUtil] token 생성 username = {}, role = {}", username,role);
+		
 		return token;
 	}
 	
 	public UsernamePasswordAuthenticationToken getAuthentication(String token) {
 		String username = this.getUsernameFromToken(token);
 		UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+		log.debug("[JwtUtil] 인증 username = {}", username);
 		return new UsernamePasswordAuthenticationToken(
 				userDetails.getUsername(), "",userDetails.getAuthorities());
 	}
@@ -95,12 +98,14 @@ public class JwtUtil {
 					.getPayload();
 			
 			if(claims.getExpiration() != null && claims.getExpiration().before(new Date())) {
+				log.warn("[JwtUtil] 토큰 만료");
 				return null;
 			}
 			
 			return claims;
 			
 		} catch (Exception e) {
+			log.warn("[JwtUtil] 토큰 유효x");
 			return null;
 		}
 	}

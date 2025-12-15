@@ -19,34 +19,34 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
+@Slf4j
 public class AuthController {
 	
 	private final AuthService authService;
 	
 	@PostMapping("/auth/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequestDto dto) {
+		log.info("[login] 로그인 시도 : username = {} ", dto.getUsername());
 		String token = authService.login(dto);
+		log.info("[login] 로그인 성공 : username = {} ", dto.getUsername());
 		return ResponseEntity.ok(Map.of("token",token));		
 	}
 	
 	@PostMapping("/auth/register")
 	public ResponseEntity<?> registerForm(@RequestBody RegisterDto dto) {
+		log.info("[register] 회원가입 시도 : username = {} ", dto.getUsername());
 		authService.register(dto);
+		log.info("[register] 회원가입 성공 : username = {} ", dto.getUsername());
         return ResponseEntity.ok("회원가입 성공");
 	}
-	@GetMapping("/check") 
-    public String checkAuth() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        
-        // 토큰 없이 요청하면 여기서 걸림
-        if (auth == null || auth.getPrincipal().equals("anonymousUser")) {
-            return "토큰 없음 (인증 안됨 - 익명 사용자)";
-        }
-        
-        return "현재 계정: " + auth.getName() + " / 가지고 있는 권한: " + auth.getAuthorities();
-    }
+	
+	@PostMapping("/auth/logout")
+	public ResponseEntity<?> logout(){
+		return ResponseEntity.ok("로그아웃 완료");
+	}
 }
