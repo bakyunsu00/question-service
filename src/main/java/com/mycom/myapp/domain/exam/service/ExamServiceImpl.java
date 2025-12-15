@@ -1,5 +1,6 @@
 package com.mycom.myapp.domain.exam.service;
 
+import com.mycom.myapp.auth.service.UserService;
 import com.mycom.myapp.domain.exam.Exam;
 import com.mycom.myapp.domain.exam.ExamRecord;
 import com.mycom.myapp.domain.Question;
@@ -8,16 +9,20 @@ import com.mycom.myapp.domain.enums.Difficulty;
 import com.mycom.myapp.domain.exam.ExamRepository;
 import com.mycom.myapp.domain.exam.ExamService;
 import com.mycom.myapp.domain.exam.TestQuestionRepository;
-import com.mycom.myapp.domain.user.UserService;
+
 import com.mycom.myapp.exceptions.ExamNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 
 public class ExamServiceImpl implements ExamService {
 
@@ -43,7 +48,9 @@ public class ExamServiceImpl implements ExamService {
 
 
     private void addRecordsToExam(int questionCount, Exam exam, Difficulty difficulty) {
-        List<Question> questions = questionRepository.pickRandomQuestion(questionCount, difficulty);
+        Pageable pageable = PageRequest.of(0,questionCount);
+        List<Question> questions = questionRepository.pickRandomQuestion(difficulty, pageable);
+        log.debug("가져온 질문 수={}",questions.size());
         for (Question question : questions) {
             ExamRecord examRecord = new ExamRecord(question);
             exam.addExamRecords(examRecord);

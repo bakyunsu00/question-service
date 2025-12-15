@@ -43,16 +43,13 @@ public class SecurityConfig {
 					                "/register.html",
 									"/api/auth/**",
                                     "/api/user/**"
-
 							).permitAll()
 							.requestMatchers("/admin","/admin.html","/api/admin/**").hasRole(UserRole.ROLE_ADMIN.name().replace("ROLE_", "")) //or enum 파일에서 ROLE_ 제거
-                                .requestMatchers("/api/user/**").hasRole(UserRole.ROLE_USER.name().replace("ROLE_",""))
 						)
 				.csrf(csrf -> csrf.disable())
 				.httpBasic(httpBasic -> httpBasic.disable())
 				.formLogin(form -> form.disable())
 				.logout(logout -> logout.disable())
-
                 .addFilterBefore(jwtfFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
 	}

@@ -17,6 +17,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -48,7 +51,9 @@ class ExamServiceImplTest {
         List<Question> questions  = new ArrayList<>();
         questions.add(mockQuestion1);
         questions.add(mockQuestion2);
-        given(questionRepository.pickRandomQuestion(2, Difficulty.MEDIUM)).willReturn(questions);
+        Pageable pageable = PageRequest.of(0,2);
+
+        given(questionRepository.pickRandomQuestion(Difficulty.MEDIUM,pageable)).willReturn(questions);
         given(examRepository.save(any(Exam.class))).willAnswer(invocation -> {return invocation.getArgument(0);});
 
 
