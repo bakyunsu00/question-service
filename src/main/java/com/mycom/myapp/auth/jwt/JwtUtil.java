@@ -1,0 +1,107 @@
+package com.mycom.myapp.auth.jwt;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
+
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+
+import com.mycom.myapp.auth.config.CustomUserDetailsService;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils; // ★ 이 줄이 없으면 에러납니다!
+@Component
+@RequiredArgsConstructor
+@Getter
+@Slf4j
+public class JwtUtil {
+	
+	private final CustomUserDetailsService customUserDetailsService;
+	
+	@Value("${myapp.jwt.secret}")
+	private String secretKeyStr;
+	private SecretKey secretKey;
+	private final long tokenValidDuration = 1000L* 60 * 60;
+	
+	@PostConstruct
+	protected void init() {
+		secretKey = new SecretKeySpec(
+				secretKeyStr.getBytes(StandardCharsets.UTF_8), 
+				Jwts.SIG.HS256.key().build().getAlgorithm()
+		);
+	}
+	
+	public String createToken(String username, String role) {
+		
+		Date now = new Date();
+		
+		String token = Jwts.builder()
+				.subject(username)
+				.claim("role", role)
+				.issuedAt(now)
+				.expiration(new Date(now.getTime()+tokenValidDuration))
+				.signWith(secretKey, Jwts.SIG.HS256)
+				.compact();
+		
+		return token;
+	}
+	
+	public UsernamePasswordAuthenticationToken getAuthentication(String token) {
+		String username = this.getUsernameFromToken(token);
+		UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+		return new UsernamePasswordAuthenticationToken(
+				userDetails.getUsername(), "",userDetails.getAuthorities());
+	}
+	
+	public String getUsernameFromToken(String token) {
+		String subject = Jwts.parser()
+				.verifyWith(secretKey)
+				.build()
+				.parseSignedClaims(token).getPayload()
+				.getSubject();
+		
+		return subject;
+	}
+	
+	public String getTokenFromHeader(HttpServletRequest request) {
+	    String bearerToken = request.getHeader("Authorization");
+	    
+	    // 1. 헤더가 존재하고
+	    // 2. "Bearer "(공백포함)로 시작하는지 확인
+	    if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+	        return bearerToken.substring(7); // 앞의 "Bearer " 7글자를 자르고 순수 토큰만 반환
+	    }
+	    
+	    return null;
+	}
+	
+	public Claims validateToken(String token) {
+		try {
+			Claims claims = Jwts.parser()
+					.verifyWith(secretKey)
+					.build()
+					.parseSignedClaims(token)
+					.getPayload();
+			
+			if(claims.getExpiration() != null && claims.getExpiration().before(new Date())) {
+				return null;
+			}
+			
+			return claims;
+			
+		} catch (Exception e) {
+			return null;
+		}
+	}
+}

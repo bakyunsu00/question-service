@@ -1,4 +1,4 @@
-package com.mycom.myapp.repository;
+package com.mycom.myapp.auth.repository;
 
 import com.mycom.myapp.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;

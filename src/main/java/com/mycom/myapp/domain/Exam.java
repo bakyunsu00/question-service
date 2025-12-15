@@ -14,16 +14,19 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@AllArgsConstructor // 님의 기능 (Builder 사용 위함)
+@Builder            // 님의 기능
+@ToString           // 팀원들이 추가한 기능 (로그 확인용)
 public class Exam {
 
     @Id
@@ -38,10 +41,16 @@ public class Exam {
 
     private LocalDateTime createdAt; // 응시 일시
 
+
+    public Exam(User user) {
+        this.user = user;
+    }
+
     // 시험지 1장에는 여러 문제의 기록이 담김
     @Builder.Default
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
     private List<ExamRecord> examRecords = new ArrayList<>();
+
 
     // 시험지 생성 시 날짜 자동 저장
     @PrePersist
@@ -52,4 +61,10 @@ public class Exam {
     public void setTotalScore(int score) {
         this.totalScore = score;
     }
+
+    public void addExamRecords(ExamRecord examRecord){
+        this.examRecords.add(examRecord);
+        examRecord.setExam(this);
+    }
+
 }

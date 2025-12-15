@@ -36,4 +36,14 @@ public class ExamRecord {
     private boolean isCorrect; // 채점 결과 (O/X)
 
     // 생성자, 빌더 등을 통해 객체 생성 시 필수값 주입
+
+
+    public ExamRecord(Question question) {
+        this.question = question;
+    }
+
+    public void setExam(Exam exam){
+        this.exam = exam;
+    }
+
 }
