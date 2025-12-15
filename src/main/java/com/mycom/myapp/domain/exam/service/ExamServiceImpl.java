@@ -8,7 +8,7 @@ import com.mycom.myapp.domain.User;
 import com.mycom.myapp.domain.enums.Difficulty;
 import com.mycom.myapp.domain.exam.ExamRepository;
 import com.mycom.myapp.domain.exam.ExamService;
-import com.mycom.myapp.domain.exam.TestQuestionRepository;
+import com.mycom.myapp.domain.question.TestQuestionRepository;
 
 import com.mycom.myapp.exceptions.ExamNotFoundException;
 import java.util.List;

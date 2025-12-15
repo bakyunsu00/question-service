@@ -1,4 +1,4 @@
-package com.mycom.myapp.domain.exam;
+package com.mycom.myapp.domain.question;
 
 import com.mycom.myapp.domain.Question;
 import com.mycom.myapp.domain.enums.Difficulty;
@@ -13,7 +13,7 @@ public interface TestQuestionRepository extends JpaRepository<Question, Long> {
     @Query(
 
 
-            value = "SELECT q FROM Question q WHERE q.difficulty = :difficulty ORDER BY function('rand')"
+            value = "SELECT q FROM Question q JOIN fetch q.choices WHERE q.difficulty = :difficulty ORDER BY function('rand')"
     )
     public List<Question> pickRandomQuestion(@Param("difficulty") Difficulty difficulty, Pageable pageable);
 

@@ -10,6 +10,7 @@ import com.mycom.myapp.domain.enums.Difficulty;
 import com.mycom.myapp.domain.exam.service.ExamServiceImpl;
 
 
+import com.mycom.myapp.domain.question.TestQuestionRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;

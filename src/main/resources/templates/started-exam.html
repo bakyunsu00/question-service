@@ -1,24 +1,30 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>시험 시작</title>
-</head>
-<body>
-
-<h2 th:text="|📝 ${exam.id}번 시험 응시|">📝 123번 시험 응시</h2>
-<p th:text="|응시자: ${exam.user.nickname}|">응시자: Mock User</p>
-<hr/>
-
+<form action="/submit-answer" method="post">
 <div th:each="record, i : ${exam.examRecords}" class="question-block">
-    <h3 th:text="|${i.count}번 문제|">1번 문제</h3>
+    <h3 th:text="|${i.count}번 문제|">i번 문제</h3>
 
-    <p th:text="${record.question.content}">문제 내용이 여기에 표시됩니다.</p>
+    <!-- 문제 내용 -->
+    <p th:text="${record.question.content}">
 
-    <form action="/submit-answer" method="post">
+    </p>
+
+
         <input type="hidden" name="recordId" th:value="${record.id}"/>
-    </form>
-</div>
 
-</body>
-</html>
+        <!-- 보기 목록 -->
+        <div th:each="choice : ${record.question.choices}">
+            <label>
+                <input
+                        type="radio"
+                        th:name="|answer_${record.id}|"
+                        th:value="${choice.id}"
+                />
+                <span th:text="${choice.content}">보기 내용</span>
+            </label>
+        </div>
+
+        <hr/>
+</div>
+        <button type="submit">답안 제출</button>
+
+
+</form>
