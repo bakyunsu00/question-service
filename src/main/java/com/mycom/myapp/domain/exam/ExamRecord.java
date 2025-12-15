@@ -1,5 +1,6 @@
-package com.mycom.myapp.domain;
+package com.mycom.myapp.domain.exam;
 
+import com.mycom.myapp.domain.Question;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;

@@ -4,9 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
 import com.mycom.myapp.auth.service.UserService;
-import com.mycom.myapp.domain.Exam;
 import com.mycom.myapp.domain.Question;
 import com.mycom.myapp.domain.User;
+import com.mycom.myapp.domain.enums.Difficulty;
+import com.mycom.myapp.domain.exam.service.ExamServiceImpl;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -46,7 +51,9 @@ class ExamServiceImplTest {
         List<Question> questions  = new ArrayList<>();
         questions.add(mockQuestion1);
         questions.add(mockQuestion2);
-        given(questionRepository.pickRandomQuestion(2)).willReturn(questions);
+        Pageable pageable = PageRequest.of(0,2);
+
+        given(questionRepository.pickRandomQuestion(Difficulty.MEDIUM,pageable)).willReturn(questions);
         given(examRepository.save(any(Exam.class))).willAnswer(invocation -> {return invocation.getArgument(0);});
 
 
@@ -55,7 +62,7 @@ class ExamServiceImplTest {
 
 
         //when
-        Exam exam = examService.createExam(user,2);
+        Exam exam = examService.createExam(user,2,Difficulty.MEDIUM);
         verify(examRepository, times(1)).save(any(Exam.class));
         //then
 

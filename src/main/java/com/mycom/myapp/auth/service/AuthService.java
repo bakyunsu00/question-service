@@ -1,5 +1,6 @@
 package com.mycom.myapp.auth.service;
 
+import com.mycom.myapp.auth.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +23,7 @@ public class AuthService {
     
     public String login(LoginRequestDto dto) {
         User user = userRepository.findByUsername(dto.getUsername())
-                .orElseThrow(() -> {
-                	return new RuntimeException("아이디 없음");
-                });
+                .orElseThrow(() -> new RuntimeException("아이디 없음"));
 
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
             throw new RuntimeException("비밀번호 틀림");
