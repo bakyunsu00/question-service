@@ -13,9 +13,9 @@ public class PageController {
 	public String login() {
 		return "login.html";
 	}
-	@GetMapping("/regisiter")
-	public String regisiter() {
-		return "regisiter.html";
+	@GetMapping("/register")
+	public String register() {
+		return "register.html";
 	}
 	@GetMapping("/admin")
 	public String admin() {

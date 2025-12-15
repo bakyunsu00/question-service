@@ -1,9 +1,14 @@
 package com.mycom.myapp.auth.service;
 
-import org.springframework.stereotype.Service;
+
 
 import com.mycom.myapp.auth.repository.UserRepository;
 import com.mycom.myapp.domain.User;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+
+
+import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,8 +21,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserById(Long id) {
-        User findUser = userRepository.findById(id).get();
-        return findUser;
+        Optional<User> optionalFindUser = userRepository.findById(id);
+        return optionalFindUser.orElseThrow(()-> new RuntimeException());
     }
 
 }

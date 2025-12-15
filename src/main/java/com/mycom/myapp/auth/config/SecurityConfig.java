@@ -42,7 +42,7 @@ public class SecurityConfig {
 					                "/register",
 					                "/register.html",
 									"/api/auth/**",
-									"/api/user/**"
+                                    "/api/user/**"
 							).permitAll()
 							.requestMatchers("/admin","/admin.html","/api/admin/**").hasRole(UserRole.ROLE_ADMIN.name().replace("ROLE_", "")) //or enum 파일에서 ROLE_ 제거
 						)
@@ -50,8 +50,8 @@ public class SecurityConfig {
 				.httpBasic(httpBasic -> httpBasic.disable())
 				.formLogin(form -> form.disable())
 				.logout(logout -> logout.disable())
-				.addFilterBefore(jwtfFilter, UsernamePasswordAuthenticationFilter.class)
-				.build();
+                .addFilterBefore(jwtfFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
 	}
 
 }
