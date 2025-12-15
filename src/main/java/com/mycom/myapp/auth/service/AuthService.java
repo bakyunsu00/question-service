@@ -36,6 +36,14 @@ public class AuthService {
     }
 
     public void register(RegisterDto dto) {
+    	
+    	if(userRepository.existsByUsername(dto.getUsername())) {
+    		throw new IllegalArgumentException("이미 존재하는 아이디");
+    	}
+    	
+    	if(dto.getPassword().length()<8) {
+    		throw new IllegalArgumentException("비밀번호는 8자 이상");
+    	}
 
         User user = User.builder()
                 .username(dto.getUsername())
@@ -46,4 +54,8 @@ public class AuthService {
 
         userRepository.save(user);
     }
+    
+    public boolean isUsernameAvailable(String username) {		
+		return !userRepository.existsByUsername(username);
+	}
 }
