@@ -9,6 +9,7 @@ import com.mycom.myapp.domain.User;
 import com.mycom.myapp.domain.enums.Difficulty;
 import com.mycom.myapp.domain.exam.service.ExamServiceImpl;
 import com.mycom.myapp.domain.user.UserService;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -47,7 +48,7 @@ class ExamServiceImplTest {
         List<Question> questions  = new ArrayList<>();
         questions.add(mockQuestion1);
         questions.add(mockQuestion2);
-        given(questionRepository.pickRandomQuestion(2, Difficulty.MEDIUM)).willReturn(questions);
+        given(questionRepository.pickRandomQuestion(2)).willReturn(questions);
         given(examRepository.save(any(Exam.class))).willAnswer(invocation -> {return invocation.getArgument(0);});
 
 
@@ -56,7 +57,7 @@ class ExamServiceImplTest {
 
 
         //when
-        Exam exam = examService.createExam(user,2,Difficulty.MEDIUM);
+        Exam exam = examService.createExam(user,2);
         verify(examRepository, times(1)).save(any(Exam.class));
         //then
 
