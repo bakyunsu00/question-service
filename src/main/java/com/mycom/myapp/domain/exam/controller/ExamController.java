@@ -7,6 +7,7 @@ import com.mycom.myapp.domain.User;
 import com.mycom.myapp.domain.enums.Difficulty;
 import com.mycom.myapp.domain.exam.ExamService;
 import com.mycom.myapp.domain.exam.dto.ExamMakeRequestDto;
+import com.mycom.myapp.domain.user.UserRepository;
 import com.mycom.myapp.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,8 @@ public class ExamController {
     private final ExamService examService;
 
     private final UserService mockUserService;
+    private final UserRepository userRepository;
+    private final UserService userService;
 
 
     @GetMapping("/exams")
@@ -47,7 +50,7 @@ public class ExamController {
             ExamMakeRequestDto examMakeRequestDto,
             RedirectAttributes redirectAttributes){
         log.debug("바인딩된 DTO= {}", examMakeRequestDto);
-        User mockUser = mockUserService.findUserById(1L);
+        User mockUser = userService.findUserById(1L);
         Exam exam = examService.createExam(mockUser, examMakeRequestDto.getQuestionCount(), examMakeRequestDto.getDifficulty());
         redirectAttributes.addAttribute("examId",exam.getId());
         return "redirect:/api/user/exams/{examId}";
