@@ -1,4 +1,4 @@
-package com.mycom.myapp.domain;
+package com.mycom.myapp.domain.admin;
 
 import com.mycom.myapp.domain.enums.UserRole;
 import jakarta.persistence.Column;
@@ -13,9 +13,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

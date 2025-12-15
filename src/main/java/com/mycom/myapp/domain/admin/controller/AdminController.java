@@ -1,4 +1,4 @@
-package com.mycom.myapp.controller;
+package com.mycom.myapp.domain.admin.controller;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mycom.myapp.dto.CategoryRequest;
-import com.mycom.myapp.dto.QuestionCreateRequest;
-import com.mycom.myapp.dto.QuestionListResponse;
-import com.mycom.myapp.dto.QuestionResponse;
-import com.mycom.myapp.dto.QuestionUpdateRequest;
-import com.mycom.myapp.service.AdminService;
+import com.mycom.myapp.domain.admin.service.AdminService;
+import com.mycom.myapp.domain.admin.dto.CategoryRequest;
+import com.mycom.myapp.domain.admin.dto.QuestionCreateRequest;
+import com.mycom.myapp.domain.admin.dto.QuestionListResponse;
+import com.mycom.myapp.domain.admin.dto.QuestionResponse;
+import com.mycom.myapp.domain.admin.dto.QuestionUpdateRequest;
 
 import lombok.RequiredArgsConstructor;
 

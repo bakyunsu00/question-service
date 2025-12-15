@@ -6,10 +6,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.mycom.myapp.auth.repository.UserRepository;
-import com.mycom.myapp.domain.Category; // ★ Category 임포트 확인!
-import com.mycom.myapp.domain.User;
+import com.mycom.myapp.domain.admin.Category;
+import com.mycom.myapp.domain.admin.User;
+import com.mycom.myapp.domain.admin.repository.CategoryRepository;
 import com.mycom.myapp.domain.enums.UserRole;
-import com.mycom.myapp.repository.CategoryRepository; // ★ CategoryRepository 임포트 확인!
 
 import lombok.RequiredArgsConstructor;
 

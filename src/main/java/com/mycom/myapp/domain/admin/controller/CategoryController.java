@@ -1,7 +1,8 @@
-package com.mycom.myapp.controller;
+package com.mycom.myapp.domain.admin.controller;
 
-import com.mycom.myapp.domain.Category;
-import com.mycom.myapp.repository.CategoryRepository;
+import com.mycom.myapp.domain.admin.Category;
+import com.mycom.myapp.domain.admin.repository.CategoryRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

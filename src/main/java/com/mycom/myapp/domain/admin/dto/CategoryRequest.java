@@ -1,4 +1,4 @@
-package com.mycom.myapp.dto;
+package com.mycom.myapp.domain.admin.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

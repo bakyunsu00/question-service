@@ -1,12 +1,14 @@
-package com.mycom.myapp.repository;
+package com.mycom.myapp.domain.admin.repository;
 
-import com.mycom.myapp.domain.Question;
-import com.mycom.myapp.domain.enums.Difficulty; // Enum 위치에 맞게 수정
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
 // ▼▼▼ 이 두 줄이 꼭 있어야 합니다! ▼▼▼
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.mycom.myapp.domain.admin.Question;
+import com.mycom.myapp.domain.enums.Difficulty; // Enum 위치에 맞게 수정
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
     

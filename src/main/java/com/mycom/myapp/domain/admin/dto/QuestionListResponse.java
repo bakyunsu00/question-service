@@ -1,6 +1,6 @@
-package com.mycom.myapp.dto;
+package com.mycom.myapp.domain.admin.dto;
 
-import com.mycom.myapp.domain.Question;
+import com.mycom.myapp.domain.admin.Question;
 import com.mycom.myapp.domain.enums.Difficulty;
 import com.mycom.myapp.domain.enums.QuestionType;
 

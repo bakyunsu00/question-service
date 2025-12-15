@@ -1,8 +1,4 @@
-package com.mycom.myapp.domain;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+package com.mycom.myapp.domain.exam;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -14,9 +10,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import com.mycom.myapp.domain.admin.User;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -24,9 +23,7 @@ import lombok.ToString;
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor // 님의 기능 (Builder 사용 위함)
-@Builder            // 님의 기능
-@ToString           // 팀원들이 추가한 기능 (로그 확인용)
+@ToString
 public class Exam {
 
     @Id
@@ -47,7 +44,6 @@ public class Exam {
     }
 
     // 시험지 1장에는 여러 문제의 기록이 담김
-    @Builder.Default
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
     private List<ExamRecord> examRecords = new ArrayList<>();
 
@@ -66,5 +62,7 @@ public class Exam {
         this.examRecords.add(examRecord);
         examRecord.setExam(this);
     }
+
+
 
 }

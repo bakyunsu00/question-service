@@ -1,5 +1,5 @@
-package com.mycom.myapp.dto;
-import com.mycom.myapp.domain.Choice;
+package com.mycom.myapp.domain.admin.dto;
+import com.mycom.myapp.domain.admin.Choice;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,19 +1,19 @@
-package com.mycom.myapp.service;
+package com.mycom.myapp.domain.admin.service;
 import org.springframework.data.domain.Page;     
 import org.springframework.data.domain.Pageable; 
 import org.springframework.stereotype.Service;
 
-import com.mycom.myapp.domain.Category;
-import com.mycom.myapp.domain.Choice;
-import com.mycom.myapp.domain.Question;
-import com.mycom.myapp.dto.CategoryRequest;
-import com.mycom.myapp.dto.ChoiceRequest;
-import com.mycom.myapp.dto.QuestionCreateRequest;
-import com.mycom.myapp.dto.QuestionListResponse;
-import com.mycom.myapp.dto.QuestionResponse;
-import com.mycom.myapp.dto.QuestionUpdateRequest;
-import com.mycom.myapp.repository.CategoryRepository;
-import com.mycom.myapp.repository.QuestionRepository;
+import com.mycom.myapp.domain.admin.Category;
+import com.mycom.myapp.domain.admin.Choice;
+import com.mycom.myapp.domain.admin.Question;
+import com.mycom.myapp.domain.admin.dto.CategoryRequest;
+import com.mycom.myapp.domain.admin.dto.ChoiceRequest;
+import com.mycom.myapp.domain.admin.dto.QuestionCreateRequest;
+import com.mycom.myapp.domain.admin.dto.QuestionListResponse;
+import com.mycom.myapp.domain.admin.dto.QuestionResponse;
+import com.mycom.myapp.domain.admin.dto.QuestionUpdateRequest;
+import com.mycom.myapp.domain.admin.repository.CategoryRepository;
+import com.mycom.myapp.domain.admin.repository.QuestionRepository;
 import org.springframework.transaction.annotation.Transactional; // 이걸로 바꾸세요!
 import lombok.RequiredArgsConstructor;
 

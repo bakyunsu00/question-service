@@ -1,7 +1,9 @@
 package com.mycom.myapp.auth.repository;
 
-import com.mycom.myapp.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.mycom.myapp.domain.admin.User;
+
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -12,4 +14,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     // 2. 회원가입용: 이미 존재하는 아이디인지 검사 (중복 체크)
     boolean existsByUsername(String username);
+
 }
