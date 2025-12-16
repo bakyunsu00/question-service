@@ -1,7 +1,11 @@
-package com.mycom.myapp.domain;
+package com.mycom.myapp.domain.admin;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.mycom.myapp.domain.enums.Difficulty;
 import com.mycom.myapp.domain.enums.QuestionType;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,14 +18,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import java.util.ArrayList;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Question {
 
     @Id
@@ -45,6 +51,7 @@ public class Question {
     private Category category;
 
     // 문제 하나에 보기가 여러 개 (객관식일 경우)
+    @Builder.Default
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Choice> choices = new ArrayList<>();
 

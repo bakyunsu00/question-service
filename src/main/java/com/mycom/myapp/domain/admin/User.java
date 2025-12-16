@@ -1,4 +1,4 @@
-package com.mycom.myapp.domain;
+package com.mycom.myapp.domain.admin;
 
 import com.mycom.myapp.domain.enums.UserRole;
 import jakarta.persistence.Column;

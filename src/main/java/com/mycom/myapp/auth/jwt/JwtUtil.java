@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
+import org.springframework.util.StringUtils; // ★ 이 줄이 없으면 에러납니다!
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -78,7 +78,15 @@ public class JwtUtil {
 	}
 	
 	public String getTokenFromHeader(HttpServletRequest request) {
-		return request.getHeader("X-AUTH-TOKEN");
+	    String bearerToken = request.getHeader("Authorization");
+	    
+	    // 1. 헤더가 존재하고
+	    // 2. "Bearer "(공백포함)로 시작하는지 확인
+	    if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+	        return bearerToken.substring(7); // 앞의 "Bearer " 7글자를 자르고 순수 토큰만 반환
+	    }
+	    
+	    return null;
 	}
 	
 	public Claims validateToken(String token) {
