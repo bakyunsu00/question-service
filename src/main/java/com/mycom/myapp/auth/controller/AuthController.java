@@ -11,16 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mycom.myapp.auth.dto.LoginRequestDto;
-import com.mycom.myapp.auth.dto.LoginResponseDto;
 import com.mycom.myapp.auth.dto.RegisterDto;
 import com.mycom.myapp.auth.service.AuthService;
-import com.mycom.myapp.domain.admin.User;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 @Slf4j
-public class AuthController {
+public class AuthController implements AuthControllerSwagger{
 	
 	private final AuthService authService;
 	
