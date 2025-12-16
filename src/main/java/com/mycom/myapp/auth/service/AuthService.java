@@ -7,10 +7,8 @@ import org.springframework.stereotype.Service;
 import com.mycom.myapp.auth.dto.LoginRequestDto;
 import com.mycom.myapp.auth.dto.RegisterDto;
 import com.mycom.myapp.auth.jwt.JwtUtil;
-//?
 import com.mycom.myapp.domain.admin.User;
-//?
-import com.mycom.myapp.domain.User;
+
 import com.mycom.myapp.domain.enums.UserRole;
 
 import lombok.RequiredArgsConstructor;

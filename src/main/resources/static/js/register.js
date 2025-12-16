@@ -41,6 +41,14 @@ function checkUsername() {
             document.getElementById("username-msg").style.color = "red";
         });
 }
+function isValidUsername(username) {
+    const regex = /^[a-z0-9!@#]{8,20}$/;
+    return regex.test(username);
+}
+function isValidPassword(password) {
+    const regex = /^[a-z0-9!@#]{8,20}$/;
+    return regex.test(password);
+}
 function register() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
@@ -50,6 +58,17 @@ function register() {
         alert("아이디 중복 확인을 해주세요");
         return;
     }
+	
+	if (!isValidUsername(username)) {
+	        document.getElementById("error").innerText =
+	            "아이디는 영문 소문자, 숫자, !@#만 사용 가능하며 8~20자여야 합니다.";
+	        return;
+	    }
+	if (!isValidPassword(password)) {
+		        document.getElementById("error").innerText =
+		            "비밀번호는 영문 소문자, 숫자, !@#만 사용 가능하며 8~20자여야 합니다.";
+		        return;
+		    }	
 
     fetch("/api/auth/register", {
         method: "POST",
