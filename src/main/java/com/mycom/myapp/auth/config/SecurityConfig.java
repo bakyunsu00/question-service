@@ -41,9 +41,9 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // [누구나 접근 가능] - 정적 리소스, 로그인/가입 페이지, 공용 API
                 .requestMatchers(
-                        "/css/**", "/js/**", "/images/**", "/favicon.ico", 
-                        "/", "/index.html", 
-                        "/login", "/login.html", 
+                        "/css/**", "/js/**", "/images/**", "/favicon.ico",
+                        "/", "/index.html",
+                        "/login", "/login.html",
                         "/register", "/register.html",
                         "/error",
                         "/admin",
@@ -52,14 +52,13 @@ public class SecurityConfig {
                         "/api/categories", // 카테고리 목록 조회
                         "/swagger-ui.html",
                         "/swagger-ui/**",
-                        "/v3/api-docs/**"
+                        "/v3/api-docs/**",
+                        "/api/user/**"
                 ).permitAll()
+
                 
-                // [관리자 전용] - 문제 등록/수정/삭제 API
-                // DB의 "ROLE_ADMIN" 권한이 있어야만 통과
-                .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN") 
-                
-                // [그 외] - 나머지 요청은 인증된 사용자만
+
+                // 나머지 요청은 인증된 사용자만
                 .anyRequest().authenticated()
             )
             

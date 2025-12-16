@@ -6,6 +6,8 @@ import com.mycom.myapp.domain.enums.Difficulty;
 public interface ExamService {
 
 	public Exam getExamById(Long id);
+	public Exam getExamForView(Long examId);
     public Exam createExam(User user, int questionCount, Difficulty difficulty);
+    public Exam submitExam(Long examId, java.util.Map<Long, String> answers);
 
 }

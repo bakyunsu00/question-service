@@ -1,7 +1,6 @@
 package com.mycom.myapp.domain.exam;
 
-import com.mycom.myapp.domain.admin.Question;
-
+import com.mycom.myapp.domain.question.Question;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +24,7 @@ public class ExamRecord {
     @JoinColumn(name = "exam_id")
     private Exam exam; // 소속된 시험지
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "question_id")
     private Question question; // 어떤 문제였는지
 
@@ -42,6 +41,14 @@ public class ExamRecord {
 
     public void setExam(Exam exam){
         this.exam = exam;
+    }
+
+    public void setUserAnswer(String userAnswer) {
+        this.userAnswer = userAnswer;
+    }
+
+    public void setCorrect(boolean isCorrect) {
+        this.isCorrect = isCorrect;
     }
 
 }

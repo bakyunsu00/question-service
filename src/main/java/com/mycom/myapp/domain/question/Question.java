@@ -1,5 +1,6 @@
-package com.mycom.myapp.domain.admin;
+package com.mycom.myapp.domain.question;
 
+import com.mycom.myapp.domain.admin.Category;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class Question {
 
     // 문제 하나에 보기가 여러 개 (객관식일 경우)
     @Builder.Default
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Choice> choices = new ArrayList<>();
 
     // 연관관계 편의 메서드 (양방향 세팅용)

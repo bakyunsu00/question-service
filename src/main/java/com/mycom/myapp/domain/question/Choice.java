@@ -1,4 +1,4 @@
-package com.mycom.myapp.domain.admin;
+package com.mycom.myapp.domain.question;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
