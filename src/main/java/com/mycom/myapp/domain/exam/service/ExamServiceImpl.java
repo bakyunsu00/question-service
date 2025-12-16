@@ -3,7 +3,7 @@ package com.mycom.myapp.domain.exam.service;
 import com.mycom.myapp.auth.service.UserService;
 import com.mycom.myapp.domain.exam.Exam;
 import com.mycom.myapp.domain.exam.ExamRecord;
-import com.mycom.myapp.domain.admin.Question;
+import com.mycom.myapp.domain.question.Question;
 import com.mycom.myapp.domain.admin.User;
 import com.mycom.myapp.domain.enums.Difficulty;
 import com.mycom.myapp.domain.exam.ExamRepository;

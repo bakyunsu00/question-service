@@ -3,7 +3,7 @@ package com.mycom.myapp.domain.admin.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.mycom.myapp.domain.admin.Question;
+import com.mycom.myapp.domain.question.Question;
 import com.mycom.myapp.domain.enums.Difficulty;
 import com.mycom.myapp.domain.enums.QuestionType;
 

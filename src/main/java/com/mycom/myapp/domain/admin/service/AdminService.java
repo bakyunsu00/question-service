@@ -4,8 +4,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.mycom.myapp.domain.admin.Category;
-import com.mycom.myapp.domain.admin.Choice;
-import com.mycom.myapp.domain.admin.Question;
+import com.mycom.myapp.domain.question.Choice;
+import com.mycom.myapp.domain.question.Question;
 import com.mycom.myapp.domain.admin.dto.CategoryRequest;
 import com.mycom.myapp.domain.admin.dto.ChoiceRequest;
 import com.mycom.myapp.domain.admin.dto.QuestionCreateRequest;

@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.mycom.myapp.domain.admin.Question;
+import com.mycom.myapp.domain.question.Question;
 import com.mycom.myapp.domain.enums.Difficulty; // Enum 위치에 맞게 수정
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {

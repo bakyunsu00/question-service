@@ -1,5 +1,6 @@
-package com.mycom.myapp.domain.admin;
+package com.mycom.myapp.domain.question;
 
+import com.mycom.myapp.domain.admin.Category;
 import java.util.ArrayList;
 import java.util.List;
 
