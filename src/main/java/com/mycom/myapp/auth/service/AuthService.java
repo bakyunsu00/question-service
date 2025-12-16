@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service;
 import com.mycom.myapp.auth.dto.LoginRequestDto;
 import com.mycom.myapp.auth.dto.RegisterDto;
 import com.mycom.myapp.auth.jwt.JwtUtil;
+//?
 import com.mycom.myapp.domain.admin.User;
+//?
+import com.mycom.myapp.domain.User;
 import com.mycom.myapp.domain.enums.UserRole;
 
 import lombok.RequiredArgsConstructor;
@@ -34,6 +37,14 @@ public class AuthService {
     }
 
     public void register(RegisterDto dto) {
+    	
+    	if(userRepository.existsByUsername(dto.getUsername())) {
+    		throw new IllegalArgumentException("이미 존재하는 아이디");
+    	}
+    	
+    	if(dto.getPassword().length()<8) {
+    		throw new IllegalArgumentException("비밀번호는 8자 이상");
+    	}
 
         User user = User.builder()
                 .username(dto.getUsername())
@@ -44,4 +55,8 @@ public class AuthService {
 
         userRepository.save(user);
     }
+    
+    public boolean isUsernameAvailable(String username) {		
+		return !userRepository.existsByUsername(username);
+	}
 }

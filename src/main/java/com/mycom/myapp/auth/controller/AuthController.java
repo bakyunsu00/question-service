@@ -3,9 +3,11 @@ package com.mycom.myapp.auth.controller;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mycom.myapp.auth.dto.LoginRequestDto;
@@ -19,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,7 +42,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("/auth/register")
-	public ResponseEntity<?> registerForm(@RequestBody RegisterDto dto) {
+	public ResponseEntity<?> registerForm(@Valid @RequestBody RegisterDto dto) {
 		log.info("[register] 회원가입 시도 : username = {} ", dto.getUsername());
 		authService.register(dto);
 		log.info("[register] 회원가입 성공 : username = {} ", dto.getUsername());
@@ -49,5 +52,11 @@ public class AuthController {
 	@PostMapping("/auth/logout")
 	public ResponseEntity<?> logout(){
 		return ResponseEntity.ok("로그아웃 완료");
+	}
+	
+	@GetMapping("/auth/check")
+	public ResponseEntity<?> checkUsername(@RequestParam("username") String username){
+		boolean available = authService.isUsernameAvailable(username);
+		return ResponseEntity.ok(Map.of("available",available));
 	}
 }
