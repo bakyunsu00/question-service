@@ -1,7 +1,8 @@
 package com.mycom.myapp.auth.service;
 
-import com.mycom.myapp.domain.User;
 import org.springframework.stereotype.Service;
+
+import com.mycom.myapp.domain.admin.User;
 
 
 public interface UserService {

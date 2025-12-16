@@ -3,9 +3,8 @@ package com.mycom.myapp.domain.exam.controller;
 
 import com.mycom.myapp.auth.repository.UserRepository;
 import com.mycom.myapp.auth.service.UserService;
+import com.mycom.myapp.domain.admin.User;
 import com.mycom.myapp.domain.exam.Exam;
-import com.mycom.myapp.domain.User;
-
 import com.mycom.myapp.domain.exam.ExamService;
 import com.mycom.myapp.domain.exam.dto.ExamMakeRequestDto;
 

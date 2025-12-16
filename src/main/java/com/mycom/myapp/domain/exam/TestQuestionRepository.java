@@ -1,6 +1,6 @@
 package com.mycom.myapp.domain.exam;
 
-import com.mycom.myapp.domain.Question;
+import com.mycom.myapp.domain.admin.Question;
 import com.mycom.myapp.domain.enums.Difficulty;
 import java.util.List;
 import org.springframework.data.domain.Pageable;

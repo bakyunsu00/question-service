@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
 import com.mycom.myapp.auth.service.UserService;
-import com.mycom.myapp.domain.Question;
-import com.mycom.myapp.domain.User;
+import com.mycom.myapp.domain.admin.Question;
+import com.mycom.myapp.domain.admin.User;
 import com.mycom.myapp.domain.enums.Difficulty;
 import com.mycom.myapp.domain.exam.service.ExamServiceImpl;
 
