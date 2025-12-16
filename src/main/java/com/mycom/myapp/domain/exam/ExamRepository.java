@@ -1,12 +1,22 @@
 package com.mycom.myapp.domain.exam;
 
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface ExamRepository extends JpaRepository<Exam,Long> {
 
 
-    //랜덤으로 문제를 뽑아오는 쿼리 필요
-
-
-
+    @Query("""
+        select e
+        from Exam e
+        left join fetch e.examRecords
+        left join fetch e.user
+        where e.id = :id
+    """)
+    Optional<Exam> findByIdWithRecords(@Param("id") Long id);
 }
+
+
+

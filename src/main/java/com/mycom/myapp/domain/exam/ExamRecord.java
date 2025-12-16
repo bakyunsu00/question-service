@@ -24,7 +24,7 @@ public class ExamRecord {
     @JoinColumn(name = "exam_id")
     private Exam exam; // 소속된 시험지
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "question_id")
     private Question question; // 어떤 문제였는지
 
@@ -41,6 +41,14 @@ public class ExamRecord {
 
     public void setExam(Exam exam){
         this.exam = exam;
+    }
+
+    public void setUserAnswer(String userAnswer) {
+        this.userAnswer = userAnswer;
+    }
+
+    public void setCorrect(boolean isCorrect) {
+        this.isCorrect = isCorrect;
     }
 
 }
