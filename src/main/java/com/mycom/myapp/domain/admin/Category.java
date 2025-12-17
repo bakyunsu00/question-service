@@ -24,5 +24,8 @@ public class Category {
     @Column(nullable = false)
     private String title; // 예: 정보처리기사, JAVA, Network
 
+    public void updateTitle(String title) {
+        this.title = title;
+    }
     // 생성자 등 필요시 추가
 }

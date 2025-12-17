@@ -61,6 +61,12 @@ public class Question {
         this.choices.add(choice);
         choice.setQuestion(this);
     }
-
+    public void update(Category category, String content, String explanation, QuestionType type, Difficulty difficulty) {
+        this.category = category;
+        this.content = content;
+        this.explanation = explanation;
+        this.type = type;
+        this.difficulty = difficulty;
+    }
     // 빌더 패턴이나 생성자 추가 권장
 }
