@@ -2,49 +2,39 @@
  * [admin.js] 관리자 페이지 전용 스크립트
  */
 
-// 1. 토큰 가져오기 (키 이름 확인: accessToken 또는 token)
 const token = localStorage.getItem('accessToken') || localStorage.getItem('token'); 
 
-// 2. 페이지 로딩 시 권한 검사 및 초기화
 document.addEventListener('DOMContentLoaded', () => {
-    // 토큰이 아예 없으면 페이지 로딩 즉시 쫓아냄
     if (!token) {
         alert("로그인이 필요합니다.");
         window.location.href = '/login.html';
         return;
     }
-
-    // 데이터 불러오기 시작
     loadCategories(); 
-    loadQuestions();  
+    loadQuestions(0); // 초기 로딩 시 0페이지 호출
 });
 
-// 3. 카테고리 불러오기
+// 1. 카테고리 불러오기
 async function loadCategories() {
     try {
         const response = await fetch('/api/categories', {
             method: 'GET',
             headers: {
-                'Authorization': 'Bearer ' + token, // 필수 헤더
+                'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json'
             }
         }); 
-
         if (!response.ok) throw new Error('카테고리 로드 실패');
-
         const categories = await response.json();
         const select = document.getElementById('inputCategory');
-        
         select.innerHTML = '<option value="">카테고리 선택</option>'; 
         categories.forEach(cat => {
             select.innerHTML += `<option value="${cat.id}">${cat.title}</option>`;
         });
-    } catch (error) {
-        console.error('카테고리 로드 에러:', error);
-    }
+    } catch (error) { console.error('카테고리 로드 에러:', error); }
 }
 
-// 4. 문제 목록 불러오기
+// 2. 문제 목록 불러오기 (수정됨: renderPagination 호출 추가)
 async function loadQuestions(page = 0) {
     try {
         const response = await fetch(`/api/admin/questions?page=${page}&size=10&sort=id,desc`, {
@@ -55,7 +45,6 @@ async function loadQuestions(page = 0) {
             }
         });
 
-        // 401(토큰만료) 또는 403(권한없음) 발생 시 처리
         if (response.status === 401 || response.status === 403) {
             handleAuthError();
             return;
@@ -63,7 +52,7 @@ async function loadQuestions(page = 0) {
 
         if (!response.ok) throw new Error('데이터 로드 실패');
 
-        const data = await response.json();
+        const data = await response.json(); // Spring의 Page 객체
         const tbody = document.getElementById('question-table-body');
         tbody.innerHTML = '';
 
@@ -87,12 +76,51 @@ async function loadQuestions(page = 0) {
                 </tr>
             `;
         });
-    } catch (error) {
-        console.error('문제 목록 로드 에러:', error);
-    }
+
+        // ✅ 핵심: 하단에 페이징 버튼을 그리는 함수 호출
+        renderPagination(data);
+
+    } catch (error) { console.error('문제 목록 로드 에러:', error); }
 }
 
-// 5. 문제 저장하기
+// 3. 페이징 버튼 생성 로직 (추가됨)
+function renderPagination(data) {
+    const paginationEl = document.getElementById('pagination');
+    if (!paginationEl) return;
+    
+    paginationEl.innerHTML = '';
+
+    const totalPages = data.totalPages; // 전체 페이지 수
+    const currentPage = data.number;   // 현재 페이지 (0부터 시작)
+
+    // [이전] 버튼
+    const prevDisabled = currentPage === 0 ? 'disabled' : '';
+    paginationEl.innerHTML += `
+        <li class="page-item ${prevDisabled}">
+            <a class="page-link" href="#" onclick="loadQuestions(${currentPage - 1}); return false;">이전</a>
+        </li>
+    `;
+
+    // [숫자] 버튼
+    for (let i = 0; i < totalPages; i++) {
+        const activeClass = i === currentPage ? 'active' : '';
+        paginationEl.innerHTML += `
+            <li class="page-item ${activeClass}">
+                <a class="page-link" href="#" onclick="loadQuestions(${i}); return false;">${i + 1}</a>
+            </li>
+        `;
+    }
+
+    // [다음] 버튼
+    const nextDisabled = currentPage >= totalPages - 1 ? 'disabled' : '';
+    paginationEl.innerHTML += `
+        <li class="page-item ${nextDisabled}">
+            <a class="page-link" href="#" onclick="loadQuestions(${currentPage + 1}); return false;">다음</a>
+        </li>
+    `;
+}
+
+// 4. 문제 저장하기
 async function saveQuestion() {
     const categoryId = document.getElementById('inputCategory').value;
     const content = document.getElementById('inputContent').value;
@@ -142,84 +170,56 @@ async function saveQuestion() {
         if (response.ok) {
             alert("문제가 성공적으로 등록되었습니다!");
             showList(); 
-            loadQuestions(); 
+            loadQuestions(0); // 첫 페이지로 리로드
             document.getElementById('question-form').reset(); 
-            document.getElementById('choice-area').style.display = 'block';
-        } else if (response.status === 403 || response.status === 401) {
-            handleAuthError();
         } else {
-            alert("등록 실패: 입력값을 확인해주세요.");
+            alert("등록 실패");
         }
-    } catch (error) {
-        console.error("저장 중 에러:", error);
-    }
+    } catch (error) { console.error("저장 중 에러:", error); }
 }
 
-// 6. 문제 삭제하기
+// 5. 문제 삭제하기
 async function deleteQuestion(id) {
-    if (!confirm("정말 삭제하시겠습니까? 복구할 수 없습니다.")) return;
-
+    if (!confirm("정말 삭제하시겠습니까?")) return;
     try {
         const response = await fetch(`/api/admin/questions/${id}`, {
             method: 'DELETE',
             headers: { 'Authorization': 'Bearer ' + token }
         });
-
         if (response.ok) {
             alert("삭제되었습니다.");
-            loadQuestions(); 
-        } else if (response.status === 403 || response.status === 401) {
-            handleAuthError();
+            loadQuestions(0); 
         } else {
-            alert("삭제 실패: 서버 오류가 발생했습니다.");
+            alert("삭제 실패 (참조된 데이터가 있을 수 있습니다)");
         }
-    } catch (error) {
-        console.error(error);
-    }
+    } catch (error) { console.error(error); }
 }
 
-// 7. 로그아웃
+// 6. 기타 유틸리티 함수
+function handleAuthError() {
+    alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+    localStorage.clear();
+    window.location.href = '/login.html';
+}
+
 function logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('accessToken');
+    localStorage.clear();
     alert("로그아웃 되었습니다.");
     window.location.href = '/login.html';
 }
 
-// --- [중요] 인증 에러 처리 (복구 완료) ---
-function handleAuthError() {
-    // 디버깅용 로그는 지우고, 실제 차단 로직 활성화
-    alert("로그인 세션이 만료되었거나 권한이 없습니다.\n다시 로그인해주세요.");
-    localStorage.removeItem('token'); 
-    localStorage.removeItem('accessToken');
-    window.location.href = '/login.html';
-}
-
-// --- 화면 전환 유틸리티 ---
 function showCreateForm() {
     document.getElementById('list-section').style.display = 'none';
     document.getElementById('form-section').style.display = 'block';
-    document.getElementById('btn-logout').style.display = 'none';
-    document.getElementById('btn-create-show').style.display = 'none';
 }
 
 function showList() {
     document.getElementById('list-section').style.display = 'block';
     document.getElementById('form-section').style.display = 'none';
-    document.getElementById('btn-logout').style.display = 'block';
-    document.getElementById('btn-create-show').style.display = 'block';
 }
 
 function toggleChoices() {
     const type = document.getElementById('inputType').value;
-    const objectiveDiv = document.getElementById('objective-section');
-    const subjectiveDiv = document.getElementById('subjective-section');
-
-    if (type === 'OBJECTIVE') {
-        objectiveDiv.style.display = 'block';
-        subjectiveDiv.style.display = 'none';   
-    } else {
-        objectiveDiv.style.display = 'none';    
-        subjectiveDiv.style.display = 'block';   
-    }
+    document.getElementById('objective-section').style.display = type === 'OBJECTIVE' ? 'block' : 'none';
+    document.getElementById('subjective-section').style.display = type === 'SUBJECTIVE' ? 'block' : 'none';
 }

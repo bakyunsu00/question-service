@@ -1,11 +1,12 @@
 package com.mycom.myapp.domain.question;
 
-import com.mycom.myapp.domain.admin.Category;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mycom.myapp.domain.admin.Category;
 import com.mycom.myapp.domain.enums.Difficulty;
 import com.mycom.myapp.domain.enums.QuestionType;
+import com.mycom.myapp.domain.exam.ExamRecord;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -55,6 +56,10 @@ public class Question {
     @Builder.Default
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Choice> choices = new ArrayList<>();
+    
+    @Builder.Default
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ExamRecord> examRecords = new ArrayList<>();
 
     // 연관관계 편의 메서드 (양방향 세팅용)
     public void addChoice(Choice choice) {
