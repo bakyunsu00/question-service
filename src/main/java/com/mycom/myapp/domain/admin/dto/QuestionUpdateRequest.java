@@ -6,8 +6,10 @@ import com.mycom.myapp.domain.enums.QuestionType;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class QuestionUpdateRequest {
     private Long categoryId;

@@ -6,7 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class PageController {
-
+	@GetMapping("/")
+    public String index() {
+        return "forward:/login.html"; 
+    }
 	@GetMapping("/login")
 	public String login() {
 		return "forward:/login.html";

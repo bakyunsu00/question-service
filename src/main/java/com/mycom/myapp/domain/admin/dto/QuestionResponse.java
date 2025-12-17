@@ -9,8 +9,10 @@ import com.mycom.myapp.domain.enums.QuestionType;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Builder
 public class QuestionResponse {
     private Long id;
