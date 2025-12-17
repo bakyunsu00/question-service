@@ -13,11 +13,15 @@
 <body>
 
 <div class="container">
-    <h2 class="mb-4">👮‍♂️ 문제 은행 관리자 (Admin)</h2>
+	<div class="d-flex justify-content-between align-items-center mb-5">
+	        <h2 class="m-0">👮‍♂️ 문제 은행 관리자 (Admin)</h2>
+	        <button id="btn-logout" class="btn btn-outline-danger btn-sm" onclick="logout()">로그아웃</button>
+    </div>
+    
 
     <div class="d-flex justify-content-between mb-3">
         <h4>문제 리스트</h4>
-        <button class="btn btn-primary" onclick="showCreateForm()">+ 문제 등록하기</button>
+		<button id="btn-create-show" class="btn btn-primary" onclick="showCreateForm()">+ 문제 등록하기</button>
     </div>
 
     <div id="list-section">
@@ -78,33 +82,38 @@
                         <textarea class="form-control" id="inputExplanation" rows="2" placeholder="해설을 입력하세요"></textarea>
                     </div>
 
-                    <div id="choice-area">
-                        <label class="form-label fw-bold">보기 입력 (정답 체크)</label>
-                        <div class="input-group mb-2">
-                            <div class="input-group-text">
-                                <input class="form-check-input mt-0" type="radio" name="correctAnswer" value="0" checked>
-                            </div>
-                            <input type="text" class="form-control choice-input" placeholder="보기 1번 내용">
-                        </div>
-                        <div class="input-group mb-2">
-                            <div class="input-group-text">
-                                <input class="form-check-input mt-0" type="radio" name="correctAnswer" value="1">
-                            </div>
-                            <input type="text" class="form-control choice-input" placeholder="보기 2번 내용">
-                        </div>
-                        <div class="input-group mb-2">
-                            <div class="input-group-text">
-                                <input class="form-check-input mt-0" type="radio" name="correctAnswer" value="2">
-                            </div>
-                            <input type="text" class="form-control choice-input" placeholder="보기 3번 내용">
-                        </div>
-                        <div class="input-group mb-2">
-                            <div class="input-group-text">
-                                <input class="form-check-input mt-0" type="radio" name="correctAnswer" value="3">
-                            </div>
-                            <input type="text" class="form-control choice-input" placeholder="보기 4번 내용">
-                        </div>
-                    </div>
+					<div id="choice-area">
+					    <div id="objective-section">
+					        <label class="form-label fw-bold">보기 입력 (정답 체크)</label>
+					        <div class="input-group mb-2">
+					            <div class="input-group-text">
+					                <input class="form-check-input mt-0" type="radio" name="correctAnswer" value="0" checked>
+					            </div>
+					            <input type="text" class="form-control choice-input" placeholder="보기 1번 내용">
+					        </div>
+					        <div class="input-group mb-2">
+					            <div class="input-group-text">
+					                <input class="form-check-input mt-0" type="radio" name="correctAnswer" value="1">
+					            </div>
+					            <input type="text" class="form-control choice-input" placeholder="보기 2번 내용">
+					        </div>
+					        <div class="input-group mb-2">
+					            <div class="input-group-text">
+					                <input class="form-check-input mt-0" type="radio" name="correctAnswer" value="2">
+					            </div>
+					            <input type="text" class="form-control choice-input" placeholder="보기 3번 내용">
+					        </div>
+					        <div class="input-group mb-2">
+					            <div class="input-group-text">
+					                <input class="form-check-input mt-0" type="radio" name="correctAnswer" value="3">
+					            </div>
+					            <input type="text" class="form-control choice-input" placeholder="보기 4번 내용">
+					        </div>
+					    </div> <div id="subjective-section" style="display: none;">
+					        <label class="form-label fw-bold">주관식 정답 입력</label>
+					        <input type="text" id="subjectiveAnswer" class="form-control" placeholder="정답을 입력하세요">
+					    </div>
+					</div>
 
                     <div class="d-flex justify-content-end mt-4">
                         <button type="button" class="btn btn-secondary me-2" onclick="showList()">취소</button>

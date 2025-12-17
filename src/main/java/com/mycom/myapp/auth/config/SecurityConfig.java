@@ -40,28 +40,33 @@ public class SecurityConfig {
             
             // 2. 경로별 접근 권한 설정
             .authorizeHttpRequests(auth -> auth
-                // [누구나 접근 가능] - 정적 리소스, 로그인/가입 페이지, 공용 API
-                .requestMatchers(
-                        "/css/**", "/js/**", "/images/**", "/favicon.ico",
-                        "/", "/index.html",
-                        "/login", "/login.html",
-                        "/register", "/register.html",
-                        "/error",
-                        "/api/auth/**",   // 로그인, 회원가입
-                        "/api/categories", // 카테고리 목록 조회
-                        "/started-exam.html",
-                        "/exam-result.html",
-                        "/exam-form.html", // 시험 생성 폼 HTML 파일 자체
-                        "/swagger-ui.html",
-                        "/swagger-ui/**",
-                        "/v3/api-docs/**"
-	                ).permitAll()
-	                .requestMatchers(
-	                        "/api/user/exams/**"
-	                ).hasRole(UserRole.ROLE_USER.name().replace("ROLE_", ""))
-                    .requestMatchers("/admin","/admin.html","/api/admin/**").hasRole(UserRole.ROLE_ADMIN.name().replace("ROLE_", ""))
-                    .anyRequest().authenticated()
-            )
+                    // [누구나 접근 가능] - 정적 리소스, 로그인/가입 페이지, 공용 API
+                    .requestMatchers(
+                            "/css/**", "/js/**", "/images/**", "/favicon.ico",
+                            "/", "/index.html",
+                            "/login", "/login.html",
+                            "/register", "/register.html",
+                            "/error",
+                               // 페이지 껍데기는 허용 (JS에서 토큰 검사 후 쫓아냄)
+                            "/api/auth/**",   // 로그인, 회원가입
+                            "/api/categories", // 카테고리 목록 조회
+                            "/swagger-ui.html",
+                            "/swagger-ui/**",
+                            "/v3/api-docs/**"
+    	                ).permitAll()
+    	                .requestMatchers(
+    	                		"/started-exam.html",
+    	                		"/exam-result.html",
+    	                        "/exam-form.html",
+    	                        "/api/user/exams/**"
+    	                ).hasAnyRole(UserRole.ROLE_USER.name().replace("ROLE_", ""),UserRole.ROLE_ADMIN.name().replace("ROLE_", ""))
+    	                .requestMatchers(
+    	                		"/admin",
+    	                        "/api/admin",
+    	                        "/admin.html"
+    	                ).hasRole(UserRole.ROLE_ADMIN.name().replace("ROLE_", ""))
+    	                .anyRequest().authenticated()
+                )
             
             // 3. JWT 필터 적용
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

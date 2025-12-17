@@ -199,15 +199,27 @@ function handleAuthError() {
 function showCreateForm() {
     document.getElementById('list-section').style.display = 'none';
     document.getElementById('form-section').style.display = 'block';
+    document.getElementById('btn-logout').style.display = 'none';
+    document.getElementById('btn-create-show').style.display = 'none';
 }
 
 function showList() {
     document.getElementById('list-section').style.display = 'block';
     document.getElementById('form-section').style.display = 'none';
+    document.getElementById('btn-logout').style.display = 'block';
+    document.getElementById('btn-create-show').style.display = 'block';
 }
 
 function toggleChoices() {
     const type = document.getElementById('inputType').value;
-    const choiceArea = document.getElementById('choice-area');
-    choiceArea.style.display = (type === 'SUBJECTIVE') ? 'none' : 'block';
+    const objectiveDiv = document.getElementById('objective-section');
+    const subjectiveDiv = document.getElementById('subjective-section');
+
+    if (type === 'OBJECTIVE') {
+        objectiveDiv.style.display = 'block';
+        subjectiveDiv.style.display = 'none';   
+    } else {
+        objectiveDiv.style.display = 'none';    
+        subjectiveDiv.style.display = 'block';   
+    }
 }
