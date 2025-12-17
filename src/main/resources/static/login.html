@@ -27,7 +27,7 @@
 
     <p id="error" style="color:red;"></p>
 
-    <button onclick="location.href='/register.html'" style="margin-top:10px;">
+    <button onclick="location.href='/api/auth/register'" style="margin-top:10px;">
         회원가입
     </button>
 
@@ -113,7 +113,7 @@ function login() {
     .then(data => {
         localStorage.setItem("token", data.token);
         alert("로그인 성공");
-        location.href = "/";
+        location.href = "/api/user/exams";
     })
     .catch(() => {
         document.getElementById("error").innerText =
@@ -125,7 +125,7 @@ function login() {
 function logout() {
     localStorage.removeItem("token");
     alert("로그아웃 되었습니다");
-    location.href = "/login";
+    location.href = "/api/auth/login";
 }
 </script>
 

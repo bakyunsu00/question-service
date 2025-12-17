@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>시험 생성</title>
@@ -64,17 +64,15 @@
         <h1>📝 시험 생성</h1>
     </div>
 
-    <form th:action="@{/api/user/exams}" method="post">
-
+    <form id="exam-form">
         <div class="form-group">
             <label for="questionCount">문항 수</label>
-            <input type="number" id="questionCount" name="questionCount"
-                   min="1" max="50" value="10" required>
+            <input type="number" id="questionCount" min="1" max="50" value="10" required>
         </div>
 
         <div class="form-group">
             <label for="difficulty">난이도</label>
-            <select id="difficulty" name="difficulty" required>
+            <select id="difficulty" required>
                 <option value="LOW">쉬움</option>
                 <option value="MEDIUM" selected>보통</option>
                 <option value="HIGH">어려움</option>
@@ -86,6 +84,48 @@
         </div>
     </form>
 </div>
+
+<script>
+    document.getElementById('exam-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('로그인이 필요합니다.');
+            location.href = '/api/auth/login';
+            return;
+        }
+
+        const data = {
+            questionCount: Number(document.getElementById('questionCount').value),
+            difficulty: document.getElementById('difficulty').value
+        };
+
+        fetch('/api/user/exams', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify(data)
+        })
+            .then(res => {
+                if (!res.ok) {
+                    console.error('STATUS:', res.status);
+                    throw new Error('시험 생성 실패');
+                }
+                return res.json();
+            })
+            .then(res => {
+                // ✅ 반드시 이 경로
+                location.href = `/api/user/exams/${res.examId}`;
+            })
+            .catch(err => {
+                console.error(err);
+                alert('시험 생성 중 오류 발생');
+            });
+    });
+</script>
 
 </body>
 </html>
