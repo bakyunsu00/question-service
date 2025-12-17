@@ -92,7 +92,7 @@
         const token = localStorage.getItem('token');
         if (!token) {
             alert('로그인이 필요합니다.');
-            location.href = '/api/auth/login';
+            location.href = '/login';
             return;
         }
 
@@ -101,7 +101,7 @@
             difficulty: document.getElementById('difficulty').value
         };
 
-        fetch('/api/user/exams', {
+        fetch('/exams', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -118,7 +118,7 @@
             })
             .then(res => {
                 // ✅ 반드시 이 경로
-                location.href = `/api/user/exams/${res.examId}`;
+                location.href = `/exams/${res.examId}`;
             })
             .catch(err => {
                 console.error(err);

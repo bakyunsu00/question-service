@@ -3,43 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <title>JWT 로그인 테스트</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 380px;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 6px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 15px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .login-btn {
+            background-color: #2196F3;
+            color: #fff;
+        }
+
+        .login-btn:hover {
+            background-color: #1976D2;
+        }
+
+        .register-btn {
+            background-color: #eee;
+            color: #333;
+        }
+
+        .register-btn:hover {
+            background-color: #ddd;
+        }
+
+        .logout-btn {
+            background-color: #f44336;
+            color: #fff;
+        }
+
+        .logout-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        #logout-area {
+            text-align: center;
+        }
+
+        #login-user {
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
 
-<h1>JWT 로그인 테스트 페이지</h1>
+<div class="container">
 
-<!-- ================= 로그인 영역 ================= -->
-<div id="login-area">
+    <h1>🔐 JWT 로그인</h1>
 
-    <h2>로그인</h2>
+    <!-- ================= 로그인 영역 ================= -->
+    <div id="login-area">
 
-    <div>
-        <label>아이디</label>
-        <input type="text" id="username" required>
+        <h2>로그인</h2>
+
+        <div class="form-group">
+            <label>아이디</label>
+            <input type="text" id="username" required>
+        </div>
+
+        <div class="form-group">
+            <label>비밀번호</label>
+            <input type="password" id="password" required>
+        </div>
+
+        <button class="login-btn" onclick="login()">로그인</button>
+
+        <p id="error" class="error"></p>
+
+        <button class="register-btn" onclick="location.href='/register'">
+            회원가입
+        </button>
+
     </div>
 
-    <div>
-        <label>비밀번호</label>
-        <input type="password" id="password" required>
+    <!-- ================= 로그아웃 영역 ================= -->
+    <div id="logout-area" style="display:none;">
+
+        <h2>로그인 완료</h2>
+        <p id="login-user"></p>
+
+        <button class="logout-btn" onclick="logout()">로그아웃</button>
+
     </div>
-
-    <button onclick="login()">로그인</button>
-
-    <p id="error" style="color:red;"></p>
-
-    <button onclick="location.href='/register'" style="margin-top:10px;">
-        회원가입
-    </button>
-
-</div>
-
-<!-- ================= 로그아웃 영역 ================= -->
-<div id="logout-area" style="display:none;">
-
-    <h2>로그인 완료</h2>
-    <p id="login-user"></p>
-
-    <button onclick="logout()">로그아웃</button>
 
 </div>
 
