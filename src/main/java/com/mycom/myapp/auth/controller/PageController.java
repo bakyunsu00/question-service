@@ -17,4 +17,14 @@ public class PageController {
 	public String register() {
 		return "forward:/register.html";
 	}
+
+    @GetMapping("/exam-form")
+    public String examForm() {
+        return "forward:/exam-form.html";
+    }
+
+	@GetMapping("/admin")
+	public String admin() {
+		return "forward:/admin.html"; // This is still a Thymeleaf template
+	}
 }

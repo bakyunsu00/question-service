@@ -47,11 +47,13 @@ public class SecurityConfig {
                         "/register", "/register.html",
                         "/error",
                         "/admin",
+                        "/api/admin",
                         "/admin.html",    // 페이지 껍데기는 허용 (JS에서 토큰 검사 후 쫓아냄)
                         "/api/auth/**",   // 로그인, 회원가입
                         "/api/categories", // 카테고리 목록 조회
                         "/started-exam.html",
                         "/exam-result.html",
+                        "/api/user/exams",
                         "/api/user/exams/*", // 시험 진행/결과 페이지 (GET 요청)
                         "/exam-form.html", // 시험 생성 폼 HTML 파일 자체
                         "api/user/exams/*/result",
