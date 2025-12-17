@@ -47,9 +47,6 @@ public class SecurityConfig {
                         "/login", "/login.html",
                         "/register", "/register.html",
                         "/error",
-                        "/admin",
-                        "/api/admin",
-                        "/admin.html",    // 페이지 껍데기는 허용 (JS에서 토큰 검사 후 쫓아냄)
                         "/api/auth/**",   // 로그인, 회원가입
                         "/api/categories", // 카테고리 목록 조회
                         "/started-exam.html",
@@ -62,7 +59,8 @@ public class SecurityConfig {
 	                .requestMatchers(
 	                        "/api/user/exams/**"
 	                ).hasRole(UserRole.ROLE_USER.name().replace("ROLE_", ""))
-	                .anyRequest().authenticated()
+                    .requestMatchers("/admin","/admin.html","/api/admin/**").hasRole(UserRole.ROLE_ADMIN.name().replace("ROLE_", ""))
+                    .anyRequest().authenticated()
             )
             
             // 3. JWT 필터 적용
