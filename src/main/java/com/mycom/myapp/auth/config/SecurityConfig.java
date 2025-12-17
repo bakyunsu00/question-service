@@ -11,6 +11,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.mycom.myapp.auth.jwt.JwtAuthenticationFilter;
 import com.mycom.myapp.auth.jwt.JwtUtil;
+import com.mycom.myapp.domain.enums.UserRole;
 
 import lombok.RequiredArgsConstructor;
 
@@ -53,21 +54,15 @@ public class SecurityConfig {
                         "/api/categories", // 카테고리 목록 조회
                         "/started-exam.html",
                         "/exam-result.html",
-                        "/api/user/exams",
-                        "/api/user/exams/*", // 시험 진행/결과 페이지 (GET 요청)
                         "/exam-form.html", // 시험 생성 폼 HTML 파일 자체
-                        "api/user/exams/*/result",
                         "/swagger-ui.html",
                         "/swagger-ui/**",
                         "/v3/api-docs/**"
-                ).permitAll()
-
-                    .requestMatchers(
-                            "/api/user/exams/**"
-                    ).authenticated()
-
-                // 나머지 요청은 인증된 사용자만
-                .anyRequest().authenticated()
+	                ).permitAll()
+	                .requestMatchers(
+	                        "/api/user/exams/**"
+	                ).hasRole(UserRole.ROLE_USER.name().replace("ROLE_", ""))
+	                .anyRequest().authenticated()
             )
             
             // 3. JWT 필터 적용
