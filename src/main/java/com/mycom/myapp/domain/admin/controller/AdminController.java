@@ -50,22 +50,22 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getQuestions(pageable));
     }
 
-    // 3. 문제 상세 조회
+ 	// 3. 문제 상세 조회
     @GetMapping("/questions/{id}")
-    public ResponseEntity<QuestionResponse> getQuestion(@PathVariable Long id) {
+    public ResponseEntity<QuestionResponse> getQuestion(@PathVariable("id") Long id) { // ✅ ("id") 추가
         return ResponseEntity.ok(adminService.getQuestion(id));
     }
 
     // 4. 문제 수정
     @PutMapping("/questions/{id}")
-    public ResponseEntity<String> updateQuestion(@PathVariable Long id, @RequestBody QuestionUpdateRequest request) {
+    public ResponseEntity<String> updateQuestion(@PathVariable("id") Long id, @RequestBody QuestionUpdateRequest request) { // ✅ ("id") 추가
         adminService.updateQuestion(id, request);
         return ResponseEntity.ok("수정 완료");
     }
 
     // 5. 문제 삭제
     @DeleteMapping("/questions/{id}")
-    public ResponseEntity<String> deleteQuestion(@PathVariable Long id) {
+    public ResponseEntity<String> deleteQuestion(@PathVariable("id") Long id) { // ✅ ("id") 추가
         adminService.deleteQuestion(id);
         return ResponseEntity.ok("삭제 완료");
     }
