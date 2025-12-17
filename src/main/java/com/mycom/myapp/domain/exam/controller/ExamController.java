@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/api/user")
+@RequestMapping
 @RequiredArgsConstructor
 @Slf4j
 public class ExamController {
