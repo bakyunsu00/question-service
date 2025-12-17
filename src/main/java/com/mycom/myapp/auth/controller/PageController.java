@@ -2,23 +2,29 @@ package com.mycom.myapp.auth.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/api/auth")
 public class PageController {
-	@GetMapping("/")
-	public String index() {
-		return "index.html";
-	}
+
 	@GetMapping("/login")
 	public String login() {
-		return "login.html";
+		return "forward:/login.html";
 	}
+
 	@GetMapping("/register")
 	public String register() {
-		return "register.html";
+		return "forward:/register.html";
 	}
+
+    @GetMapping("/exam-form")
+    public String examForm() {
+        return "forward:/exam-form.html";
+    }
+
 	@GetMapping("/admin")
 	public String admin() {
-		return "admin.html";
+		return "forward:/admin.html"; // This is still a Thymeleaf template
 	}
 }

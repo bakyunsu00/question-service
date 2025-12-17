@@ -7,11 +7,48 @@
 <body>
 <hr>
 <h1>index.html</h1>
+<button onclick="goToExamForm()">시험 응시</button>
+<br><br>
 <button onclick="logout()">로그아웃</button>
 <script>
 function logout() {
     localStorage.removeItem("token");
-    location.href = "/login";
+    location.href = "/api/auth/login";
+}
+
+function goToExamForm() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('로그인이 필요합니다.');
+        location.href = '/api/auth/login';
+        return;
+    }
+
+    fetch('/api/user/exams', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            // Server responds with 200 OK and forwards to exam-form.html
+            // Client-side, we just need to navigate to the intended page.
+            // The actual content for /api/user/exams is exam-form.html,
+            // so we navigate directly to it to avoid another server roundtrip for the same content.
+            location.href = '/exam-form.html';
+        } else if (response.status === 403) {
+            alert('접근 권한이 없습니다. 다시 로그인 해주세요.');
+            localStorage.removeItem('token');
+            location.href = '/api/auth/login';
+        } else {
+            throw new Error('시험 폼 로딩 실패');
+        }
+    })
+    .catch(error => {
+        console.error('시험 폼 로딩 중 오류 발생:', error);
+        alert('시험 폼을 불러오는 데 실패했습니다.');
+    });
 }
 </script>
 </body>

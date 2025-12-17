@@ -20,7 +20,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.StringUtils; // ★ 이 줄이 없으면 에러납니다!
+import org.springframework.util.StringUtils;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -64,7 +65,7 @@ public class JwtUtil {
 		UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
 		log.debug("[JwtUtil] 인증 username = {}", username);
 		return new UsernamePasswordAuthenticationToken(
-				userDetails.getUsername(), "",userDetails.getAuthorities());
+				userDetails, "",userDetails.getAuthorities());
 	}
 	
 	public String getUsernameFromToken(String token) {
