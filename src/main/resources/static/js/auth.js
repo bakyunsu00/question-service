@@ -20,6 +20,7 @@ function login() {
     })
     .then(data => {
         localStorage.setItem("token", data.token);
+		document.cookie = `token=${data.token}; path=/; Secure; SameSite=Strict`;
         alert("로그인 성공");
         location.href = "/";
     })

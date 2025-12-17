@@ -27,7 +27,7 @@
 
     <p id="error" style="color:red;"></p>
 
-    <button onclick="location.href='/api/auth/register'" style="margin-top:10px;">
+    <button onclick="location.href='/register'" style="margin-top:10px;">
         회원가입
     </button>
 
@@ -43,92 +43,8 @@
 
 </div>
 
-<script>
-// ================= 페이지 로드시 로그인 상태 확인 =================
-document.addEventListener("DOMContentLoaded", checkLoginStatus);
-
-function checkLoginStatus() {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-        showLoginForm();
-        return;
-    }
-
-    fetch("/api/user/me", {
-        method: "GET",
-        headers: {
-        	"Authorization": "Bearer " + token
-        }
-    })
-    .then(res => {
-        if (!res.ok) {
-            throw new Error("토큰 무효");
-        }
-        return res.json();
-    })
-    .then(user => {
-        showLogoutForm(user.username);
-    })
-    .catch(() => {
-        localStorage.removeItem("token");
-        showLoginForm();
-    });
-}
-
-// ================= 화면 전환 =================
-function showLoginForm() {
-    document.getElementById("login-area").style.display = "block";
-    document.getElementById("logout-area").style.display = "none";
-}
-
-function showLogoutForm(username) {
-    document.getElementById("login-area").style.display = "none";
-    document.getElementById("logout-area").style.display = "block";
-    document.getElementById("login-user").innerText =
-        "로그인 사용자: " + username;
-}
-
-// ================= 로그인 =================
-function login() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-
-    fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username: username,
-            password: password
-        })
-    })
-    .then(res => {
-        if (!res.ok) {
-            throw new Error("로그인 실패");
-        }
-        return res.json();
-    })
-    .then(data => {
-        localStorage.setItem("token", data.token);
-        document.cookie = `token=${data.token}; path=/; Secure; SameSite=Strict`;
-        alert("로그인 성공");
-        location.href = "/api/user/exams";
-    })
-    .catch(() => {
-        document.getElementById("error").innerText =
-            "아이디 또는 비밀번호가 잘못되었습니다.";
-    });
-}
-
-// ================= 로그아웃 =================
-function logout() {
-    localStorage.removeItem("token");
-    alert("로그아웃 되었습니다");
-    location.href = "/api/auth/login";
-}
-</script>
+<script src="/js/auth.js"></script>
+<script src="/js/autCheck.js"></script>
 
 </body>
 </html>

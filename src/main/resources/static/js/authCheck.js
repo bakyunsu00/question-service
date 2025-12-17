@@ -7,12 +7,12 @@ function checkLoginStatus() {
         return;
     }
 
-    fetch("/api/user/me", {
-        method: "GET",
-        headers: {
-            "X-AUTH-TOKEN": token
-        }
-    })
+	fetch("/api/user/me", {
+	        method: "GET",
+	        headers: {
+	        	"Authorization": "Bearer " + token
+	        }
+	    })
     .then(res => {
         if (!res.ok) {
             throw new Error("토큰 무효");
