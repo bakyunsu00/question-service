@@ -93,7 +93,7 @@
             headers['Authorization'] = `Bearer ${token}`;
         }
 
-        fetch(`/api/user/exams/${examId}/data`, {
+        fetch(`/exams/${examId}/data`, {
              headers: headers
         })
         .then(response => {
@@ -163,7 +163,7 @@
             });
 
 
-            fetch(`/api/user/exams/${examId}/submit`, {
+            fetch(`/exams/${examId}/submit`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -179,7 +179,7 @@
             })
             .then(data => {
                 sessionStorage.setItem('examResult', JSON.stringify(data));
-                window.location.href = `/api/user/exams/${examId}/result`;
+                window.location.href = `/exams/${examId}/result`;
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);

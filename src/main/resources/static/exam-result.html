@@ -176,7 +176,7 @@
                 
                 const buttonGroup = document.createElement('div');
                 buttonGroup.className = 'button-group';
-                buttonGroup.innerHTML = '<a href="/api/user/exams" class="btn btn-primary">새 시험 보기</a>';
+                buttonGroup.innerHTML = '<a href="/exams" class="btn btn-primary">새 시험 보기</a>';
                 resultContainer.appendChild(buttonGroup);
             }
 
@@ -185,7 +185,7 @@
                 sessionStorage.removeItem('examResult');
                 renderResult(JSON.parse(storedResult));
             } else {
-                fetch(`/api/user/exams/${examId}/result/data`, {
+                fetch(`/exams/${examId}/result/data`, {
                      headers: {
                         // You might need to add an Authorization header with a JWT token here
                     }
