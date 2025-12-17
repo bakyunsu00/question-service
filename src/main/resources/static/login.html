@@ -58,7 +58,7 @@ function checkLoginStatus() {
     fetch("/api/user/me", {
         method: "GET",
         headers: {
-            "X-AUTH-TOKEN": token
+        	"Authorization": "Bearer " + token
         }
     })
     .then(res => {
@@ -112,6 +112,7 @@ function login() {
     })
     .then(data => {
         localStorage.setItem("token", data.token);
+        document.cookie = `token=${data.token}; path=/; Secure; SameSite=Strict`;
         alert("로그인 성공");
         location.href = "/api/user/exams";
     })

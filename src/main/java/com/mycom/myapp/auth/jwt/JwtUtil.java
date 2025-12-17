@@ -10,17 +10,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import com.mycom.myapp.auth.config.CustomUserDetailsService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.StringUtils;
 
 @Component
 @RequiredArgsConstructor
@@ -85,6 +85,14 @@ public class JwtUtil {
 	    // 2. "Bearer "(공백포함)로 시작하는지 확인
 	    if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
 	        return bearerToken.substring(7); // 앞의 "Bearer " 7글자를 자르고 순수 토큰만 반환
+	    }
+	    
+	    if (request.getCookies() != null) {
+	        for (Cookie cookie : request.getCookies()) {
+	            if ("token".equals(cookie.getName())) {
+	                return cookie.getValue();
+	            }
+	        }
 	    }
 	    
 	    return null;
