@@ -29,10 +29,21 @@ public class AuthController implements AuthControllerSwagger{
 	
 	@PostMapping("/auth/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequestDto dto) {
-		log.info("[login] 로그인 시도 : username = {} ", dto.getUsername());
-		String token = authService.login(dto);
-		log.info("[login] 로그인 성공 : username = {} ", dto.getUsername());
-		return ResponseEntity.ok(Map.of("token",token));		
+	    log.info("[login] 로그인 시도 : username = {} ", dto.getUsername());
+	    
+	    // 1. 토큰 생성
+	    String token = authService.login(dto);
+	    
+	    // 2. 추가한 메서드로 권한 가져오기
+	    String role = authService.getUserRole(dto.getUsername());
+	    
+	    log.info("[login] 로그인 성공 : username = {}, role = {}", dto.getUsername(), role);
+	    
+	    // 3. 응답에 포함
+	    return ResponseEntity.ok(Map.of(
+	        "token", token,
+	        "role", role
+	    ));        
 	}
 	
 	@PostMapping("/auth/register")
